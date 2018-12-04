@@ -2,6 +2,7 @@ package com.kodilla;
 
 public class BoardView {
     private Pawn [][] pawn = new Pawn [7][9];
+    private Board board = new Board();
 
     public BoardView(boolean whiteOnTop) {
         char colourOnTop;
