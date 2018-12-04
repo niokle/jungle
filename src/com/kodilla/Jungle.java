@@ -17,7 +17,9 @@ public class Jungle extends Application {
     private FlowPane cards = new FlowPane(Orientation.HORIZONTAL);
 
     public static void main(String[] args) {
-        launch(args);
+        //launch(args);
+        BoardView b = new BoardView(true);
+        System.out.println(b.getPawn(0,0).getName()+b.getPawn(0,0).getColour());
     }
 
     @Override
