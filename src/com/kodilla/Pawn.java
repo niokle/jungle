@@ -7,12 +7,14 @@ public class Pawn {
     private char colour;
     private int strength;
     private Image image;
+    private boolean active;
 
-    public Pawn(String name, char colour, int strength, String imagePath) {
+    public Pawn(String name, char colour, int strength, String imagePath, boolean active) {
         this.name = name;
         this.colour = colour;
         this.strength = strength;
         this.image = new Image(imagePath);
+        this.active = active;
     }
 
     public String getName() {
@@ -29,5 +31,9 @@ public class Pawn {
 
     public Image getImage() {
         return image;
+    }
+
+    public boolean getActive() {
+        return active;
     }
 }
