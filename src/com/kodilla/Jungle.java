@@ -18,7 +18,7 @@ public class Jungle extends Application {
 
     public static void main(String[] args) {
         //launch(args);
-       Pawn pawn = new Pawn("Cat",'W', 1, "file:resources/pawns/ratW.png", true);
+       Pawn pawn = new Pawn("Lion",'B', 1, "file:resources/pawns/ratW.png", true);
        PawnMoves pawnMoves = new PawnMoves();
 
        Board board = new Board();
@@ -27,7 +27,7 @@ public class Jungle extends Application {
 
           //     && pawn.getName() != "Rat" && pawn.getName() != "Lion" && pawn.getName() != "Tiger")
 
-       for (Coordinates c : pawnMoves.getMoves(pawn, 1,2, true)) {
+       for (Coordinates c : pawnMoves.getMoves(pawn, 3,1, true)) {
             System.out.println(c.getColumn() + " " + c.getRow());
         }
 
