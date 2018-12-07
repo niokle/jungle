@@ -13,7 +13,7 @@ public class Field {
         return type;
     }
 
-    public Boolean getColour() {
+    public Boolean getOnTop() {
         return onTop;
     }
 }
