@@ -9,12 +9,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
 import java.util.ArrayList;
 
 public class Jungle extends Application {
     private BackgroundAndGrid backgroundAndGrid = new BackgroundAndGrid();
     private boolean whiteOnTop = true;
+    private boolean computerOnTop = true;
     private BoardView boardView = new BoardView(whiteOnTop);
     private PawnMoves pawnMoves = new PawnMoves();
     private Image image = new Image("file:resources/move.png");
@@ -27,7 +27,7 @@ public class Jungle extends Application {
     }
 
     public void test() {
-       //przycisk
+       //akcja
     }
 
     public void drawPawns() {
@@ -59,16 +59,32 @@ public class Jungle extends Application {
                 int column = GridPane.getColumnIndex(event.getPickResult().getIntersectedNode());
                 int row = GridPane.getRowIndex(event.getPickResult().getIntersectedNode());
                 Pawn pawn = boardView.getPawn(column, row);
-                coordinates.clear();
-                coordinates = pawnMoves.getMoves(pawn, column, row, whiteOnTop);
-                for (int i = 0; i <= numberOfImageViews; i++) {
-                    backgroundAndGrid.getGrid().getChildren().remove(imageView[i]);
+                char colorNotAvailable;
+                if (computerOnTop) {
+                    if (whiteOnTop) {
+                        colorNotAvailable = 'W';
+                    } else {
+                        colorNotAvailable = 'B';
+                    }
+                }  else {
+                    if (whiteOnTop) {
+                        colorNotAvailable = 'B';
+                    } else {
+                        colorNotAvailable = 'W';
+                    }
                 }
-                for (int j = 0; j < coordinates.size(); j++) {
-                    imageView[j].setFitHeight(20);
-                    imageView[j].setFitWidth(20);
-                    backgroundAndGrid.getGrid().add(imageView[j], coordinates.get(j).getColumn(), coordinates.get(j).getRow());
-                    numberOfImageViews = j;
+                if (pawn.getColour() != colorNotAvailable) {
+                    coordinates.clear();
+                    coordinates = pawnMoves.getMoves(pawn, column, row, whiteOnTop);
+                    for (int i = 0; i <= numberOfImageViews; i++) {
+                        backgroundAndGrid.getGrid().getChildren().remove(imageView[i]);
+                    }
+                    for (int j = 0; j < coordinates.size(); j++) {
+                        imageView[j].setFitHeight(20);
+                        imageView[j].setFitWidth(20);
+                        backgroundAndGrid.getGrid().add(imageView[j], coordinates.get(j).getColumn(), coordinates.get(j).getRow());
+                        numberOfImageViews = j;
+                    }
                 }
             }
         });
@@ -80,5 +96,4 @@ public class Jungle extends Application {
         primaryStage.show();
 
     }
-
 }
