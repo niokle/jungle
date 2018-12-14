@@ -2,12 +2,10 @@ package com.kodilla;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -19,14 +17,17 @@ public class Jungle extends Application {
     private boolean whiteOnTop = true;
     private BoardView boardView = new BoardView(whiteOnTop);
     private PawnMoves pawnMoves = new PawnMoves();
-    private ArrayList<ImageView> oldMoves = new ArrayList<>();
+    private Image image = new Image("file:resources/move.png");
+    private ImageView imageView[] = {new ImageView(image), new ImageView(image), new ImageView(image), new ImageView(image)};
+    private int numberOfImageViews;
+    private ArrayList<Coordinates> coordinates = new ArrayList<>();
 
     public static void main(String[] args) {
         launch(args);
     }
 
     public void test() {
-       //test
+       //przycisk
     }
 
     public void drawPawns() {
@@ -55,18 +56,19 @@ public class Jungle extends Application {
         backgroundAndGrid.getGrid().setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                Image image = new Image("file:resources/move.png");
-                ImageView imageView[] = {new ImageView(image), new ImageView(image), new ImageView(image), new ImageView(image)};
                 int column = GridPane.getColumnIndex(event.getPickResult().getIntersectedNode());
                 int row = GridPane.getRowIndex(event.getPickResult().getIntersectedNode());
                 Pawn pawn = boardView.getPawn(column, row);
-                ArrayList<Coordinates> coordinates = pawnMoves.getMoves(pawn, column, row, whiteOnTop);
-                for (ImageView imv : oldMoves) {
-                    //backgroundAndGrid.getGrid().remove(imv);
+                coordinates.clear();
+                coordinates = pawnMoves.getMoves(pawn, column, row, whiteOnTop);
+                for (int i = 0; i <= numberOfImageViews; i++) {
+                    backgroundAndGrid.getGrid().getChildren().remove(imageView[i]);
                 }
-                for (int i = 0; i < coordinates.size(); i++) {
-                    oldMoves.add(imageView[i]);
-                    backgroundAndGrid.getGrid().add(imageView[i], coordinates.get(i).getColumn(), coordinates.get(i).getRow());
+                for (int j = 0; j < coordinates.size(); j++) {
+                    imageView[j].setFitHeight(20);
+                    imageView[j].setFitWidth(20);
+                    backgroundAndGrid.getGrid().add(imageView[j], coordinates.get(j).getColumn(), coordinates.get(j).getRow());
+                    numberOfImageViews = j;
                 }
             }
         });

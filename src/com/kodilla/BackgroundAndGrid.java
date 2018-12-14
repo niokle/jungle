@@ -38,7 +38,6 @@ public class BackgroundAndGrid {
         labelWhoseMove.setTextFill(color);
         grid.add(labelWhoseMove,8,1, 9,1);
 
-        //buttonNewGame.setOnAction();
         buttonNewGame.setFont(font);
         buttonNewGame.setTextFill(color);
         buttonNewGame.setText("Nowa gra");
