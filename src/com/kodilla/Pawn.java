@@ -18,8 +18,8 @@ public class Pawn {
         this.image = new Image(imagePath);
         this.active = active;
         imageView = new ImageView(image);
-        imageView.setFitHeight(70);
-        imageView.setFitWidth(70);
+        imageView.setFitHeight(77);
+        imageView.setFitWidth(77);
     }
 
     public String getName() {
@@ -45,5 +45,4 @@ public class Pawn {
     public ImageView getImageView() {
         return imageView;
     }
-
 }

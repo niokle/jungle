@@ -24,14 +24,15 @@ public class BackgroundAndGrid {
         grid.setAlignment(Pos.TOP_CENTER);
         grid.setPadding(new Insets(0, 0, 0, 240));
         for (int column = 0; column <= 9; column++) {
-            grid.getColumnConstraints().add(new ColumnConstraints(80));
+            grid.getColumnConstraints().add(new ColumnConstraints(79));
             for (int row = 0; row <= 8; row++) {
-                grid.getRowConstraints().add(new RowConstraints(80));
+                grid.getRowConstraints().add(new RowConstraints(79));
             }
         }
         grid.setHgap(0);
         grid.setVgap(0);
         grid.setBackground(background);
+        //grid.setGridLinesVisible(true);
 
         labelWhoseMove.setFont(font);
         labelWhoseMove.setTextFill(color);
@@ -48,8 +49,12 @@ public class BackgroundAndGrid {
         return grid;
     }
 
-    public void setTextWhoseMove(String text) {
-        labelWhoseMove.setText(text);
+    public Label getLabelWhoseMove() {
+        return labelWhoseMove;
+    }
+
+    public Button getButtonNewGame() {
+        return buttonNewGame;
     }
 
 }

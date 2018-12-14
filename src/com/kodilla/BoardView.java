@@ -36,7 +36,6 @@ public class BoardView {
         pawn[4][6] = new Pawn("Panther", colourOnBot, 5, "file:resources/pawns/panther" + colourOnBot + ".png", true);
         pawn[2][6] = new Pawn("Wolf", colourOnBot, 3, "file:resources/pawns/wolf" + colourOnBot + ".png", true);
         pawn[0][6] = new Pawn("Elephant", colourOnBot, 8, "file:resources/pawns/elephant" + colourOnBot + ".png", true);
-
     }
 
     public Pawn getPawn(int column, int row) {
