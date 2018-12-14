@@ -45,6 +45,13 @@ public class Jungle extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        if(computerOnTop) {
+            backgroundAndGrid.getLabelOnTop().setText("KOMPUTER");
+            backgroundAndGrid.getLabelOnBot().setText("GRACZ");
+        } else {
+            backgroundAndGrid.getLabelOnTop().setText("GRACZ");
+            backgroundAndGrid.getLabelOnBot().setText("KOMPUTER");
+        }
         backgroundAndGrid.getLabelWhoseMove().setText("Ruch gracza");
 
         drawPawns();
