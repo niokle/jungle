@@ -1,6 +1,7 @@
 package com.kodilla;
 
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class Pawn {
     private String name;
@@ -8,6 +9,7 @@ public class Pawn {
     private int strength;
     private Image image;
     private boolean active;
+    private ImageView imageView;
 
     public Pawn(String name, char colour, int strength, String imagePath, boolean active) {
         this.name = name;
@@ -15,6 +17,9 @@ public class Pawn {
         this.strength = strength;
         this.image = new Image(imagePath);
         this.active = active;
+        imageView = new ImageView(image);
+        imageView.setFitHeight(70);
+        imageView.setFitWidth(70);
     }
 
     public String getName() {
@@ -36,4 +41,9 @@ public class Pawn {
     public boolean getActive() {
         return active;
     }
+
+    public ImageView getImageView() {
+        return imageView;
+    }
+
 }
