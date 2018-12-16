@@ -5,6 +5,11 @@ import java.util.ArrayList;
 public class PawnMoves {
     private Board board = new Board();
     private ArrayList<Coordinates> coordinatesList = new ArrayList<>();
+    private BoardView boardView;
+
+    public PawnMoves(BoardView boardView) {
+        this.boardView = boardView;
+    }
 
     public ArrayList<Coordinates> getMoves(Pawn pawn, int column, int row, boolean whiteOnTop) {
         Coordinates moveLeft = new Coordinates(column, row - 1, "moveLeft");
@@ -21,6 +26,11 @@ public class PawnMoves {
         for (Coordinates coordinates : coordinatesListTemp) {
             if (coordinates.getColumn() < 0 || coordinates.getColumn() > 6 || coordinates.getRow() < 0 || coordinates.getRow() > 8) {
                 continue;
+            }
+            if (boardView.getPawn(coordinates.getColumn(), coordinates.getRow()) != null) {
+                if (pawn.getColour() == boardView.getPawn(coordinates.getColumn(), coordinates.getRow()).getColour()) {
+                    continue;
+                }
             }
             if (board.getField(coordinates.getColumn(), coordinates.getRow()).getType() == "Lake" && pawn.getName() != "Rat" && pawn.getName() != "Lion" && pawn.getName() != "Tiger") {
                 continue;

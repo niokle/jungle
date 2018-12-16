@@ -17,7 +17,7 @@ public class Jungle extends Application {
     private boolean computerWhitePawns = true;
     private boolean computerMove = false;
     private BoardView boardView = new BoardView(whiteOnTop);
-    private PawnMoves pawnMoves = new PawnMoves();
+    private PawnMoves pawnMoves = new PawnMoves(boardView);
     private Image image = new Image("file:resources/move.png");
     private ImageView imageView[] = {new ImageView(image), new ImageView(image), new ImageView(image), new ImageView(image)};
     private int numberOfImageViews;
@@ -29,7 +29,7 @@ public class Jungle extends Application {
     }
 
     public void test() {
-       boardView.setPawnPosition(selectedPawn, boardView.getPawnCoordinates(selectedPawn).getColumn() + 1, boardView.getPawnCoordinates(selectedPawn).getRow());
+       boardView.resetPositions();
        drawPawns();
     }
 
@@ -45,9 +45,24 @@ public class Jungle extends Application {
         }
     }
 
-    public void playerMove() {
-
+    public void showPossiblePlayerMoves(Pawn pawn, int column, int row) {
+        removePossiblePlayerMoves();
+        coordinates.clear();
+        coordinates = pawnMoves.getMoves(pawn, column, row, whiteOnTop);
+        for (int j = 0; j < coordinates.size(); j++) {
+            imageView[j].setFitHeight(79);
+            imageView[j].setFitWidth(79);
+            backgroundAndGrid.getGrid().add(imageView[j], coordinates.get(j).getColumn(), coordinates.get(j).getRow());
+            numberOfImageViews = j;
+        }
     }
+
+    public void removePossiblePlayerMoves() {
+        for (int i = 0; i <= numberOfImageViews; i++) {
+            backgroundAndGrid.getGrid().getChildren().remove(imageView[i]);
+        }
+    }
+
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -58,7 +73,11 @@ public class Jungle extends Application {
             backgroundAndGrid.getLabelOnTop().setText("GRACZ");
             backgroundAndGrid.getLabelOnBot().setText("KOMPUTER");
         }
-        backgroundAndGrid.getLabelWhoseMove().setText("Ruch gracza");
+        if (computerMove) {
+            backgroundAndGrid.getLabelWhoseMove().setText("Ruch komputera");
+        } else {
+            backgroundAndGrid.getLabelWhoseMove().setText("Ruch gracza");
+        }
 
         drawPawns();
 
@@ -75,15 +94,20 @@ public class Jungle extends Application {
                     int row = GridPane.getRowIndex(event.getPickResult().getIntersectedNode());
 
                     if (selectedPawn != null) {
-                        if (pawnMoves.getMoves(selectedPawn, boardView.getPawnCoordinates(selectedPawn).getColumn(), boardView.getPawnCoordinates(selectedPawn).getRow(), whiteOnTop).contains(new Coordinates(column, row, ""))) {
-                            boardView.setPawnPosition(selectedPawn, column, row);
+                        Coordinates coordinates = new Coordinates(column, row, "");
+                        for (Coordinates c : pawnMoves.getMoves(selectedPawn, boardView.getPawnCoordinates(selectedPawn).getColumn(), boardView.getPawnCoordinates(selectedPawn).getRow(), whiteOnTop)) {
+                            if (c.getColumn() == coordinates.getColumn() && c.getRow() == coordinates.getRow()) {
+                                boardView.setPawnPosition(selectedPawn, column, row);
+                                drawPawns();
+                                computerMove = true;
+                            }
                         }
                     }
 
                     Pawn pawn = boardView.getPawn(column, row);
                     selectedPawn = pawn;
                     // test
-                    backgroundAndGrid.getLabelWhoseMove().setText(column + " - " + row + " / " + selectedPawn);
+                    backgroundAndGrid.getLabelWhoseMove().setText(column + " - " + row);
                     // test
                     char colorNotAvailable;
                     if (computerWhitePawns) {
@@ -92,24 +116,10 @@ public class Jungle extends Application {
                         colorNotAvailable = 'B';
                     }
 
-                    if (pawn.getColour() != colorNotAvailable) {
-                        coordinates.clear();
-                        coordinates = pawnMoves.getMoves(pawn, column, row, whiteOnTop);
-                        for (int i = 0; i <= numberOfImageViews; i++) {
-                            backgroundAndGrid.getGrid().getChildren().remove(imageView[i]);
-                        }
-                        for (int j = 0; j < coordinates.size(); j++) {
-                            imageView[j].setFitHeight(79);
-                            imageView[j].setFitWidth(79);
-                            backgroundAndGrid.getGrid().add(imageView[j], coordinates.get(j).getColumn(), coordinates.get(j).getRow());
-                            numberOfImageViews = j;
-                        }
+                    if (pawn.getColour() != colorNotAvailable && !computerMove) {
+                        showPossiblePlayerMoves(pawn, column, row);
                     }
                 }
-                //boardView.setPawnPosition(pawn, boardView.getPawnCoordinates(pawn).getColumn() + 1, boardView.getPawnCoordinates(pawn).getRow());
-                //drawPawns();
-                //backgroundAndGrid.getLabelWhoseMove().setText(selectedPawn.getName());
-
             }
 
         });

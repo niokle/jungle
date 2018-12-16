@@ -21,6 +21,12 @@ public class BoardView {
             colourOnBot = 'W';
         }
 
+        for (int column = 0; column <= 6; column++) {
+            for (int row = 0; row <= 8; row++) {
+                pawn[column][row] = null;
+            }
+        }
+
         pawn[0][0] = new Pawn("Lion", colourOnTop, 7, "file:resources/pawns/lion" + colourOnTop + ".png", true);
         pawn[6][0] = new Pawn("Tiger", colourOnTop, 6, "file:resources/pawns/tiger" + colourOnTop + ".png", true);
         pawn[1][1] = new Pawn("Dog", colourOnTop, 4, "file:resources/pawns/dog" + colourOnTop + ".png", true);
