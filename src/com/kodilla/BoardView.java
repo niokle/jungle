@@ -3,7 +3,6 @@ package com.kodilla;
 public class BoardView {
     private boolean whiteOnTop;
     private Pawn[][] pawn = new Pawn[7][9];
-    private Home[][] home = new Home[7][9];
     private Board board = new Board();
 
     public BoardView(boolean whiteOnTop) {
@@ -22,8 +21,6 @@ public class BoardView {
             colourOnBot = 'W';
         }
 
-        home[3][0] = new Home(colourOnTop, "file:resources/home" + colourOnTop + ".png");
-        home[3][8] = new Home(colourOnBot, "file:resources/home" + colourOnBot + ".png");
         pawn[0][0] = new Pawn("Lion", colourOnTop, 7, "file:resources/pawns/lion" + colourOnTop + ".png", true);
         pawn[6][0] = new Pawn("Tiger", colourOnTop, 6, "file:resources/pawns/tiger" + colourOnTop + ".png", true);
         pawn[1][1] = new Pawn("Dog", colourOnTop, 4, "file:resources/pawns/dog" + colourOnTop + ".png", true);
@@ -44,10 +41,6 @@ public class BoardView {
 
     public Pawn getPawn(int column, int row) {
         return pawn[column][row];
-    }
-
-    public Home getHome(int column, int row) {
-        return home[column][row];
     }
 
     public void setPawnPosition(Pawn pawn, int column, int row) {

@@ -1,19 +1,26 @@
 package com.kodilla;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
 public class Field {
     private String type;
-    private Boolean onTop;
+    private Image image;
+    private ImageView imageView;
 
-    public Field(String type, Boolean onTop) {
+    public Field(String type, String imagePath) {
         this.type = type;
-        this.onTop = onTop;
+        image = new Image(imagePath);
+        imageView = new ImageView(image);
+        imageView.setFitHeight(79);
+        imageView.setFitWidth(79);
     }
 
     public String getType() {
         return type;
     }
 
-    public Boolean getOnTop() {
-        return onTop;
+    public ImageView getImageView() {
+        return imageView;
     }
 }

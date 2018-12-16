@@ -59,16 +59,10 @@ public class PawnMoves {
                         continue;
                 }
             }
-            if (board.getField(coordinates.getColumn(), coordinates.getRow()).getType() == "Home" && board.getField(coordinates.getColumn(), coordinates.getRow()).getOnTop() == true && whiteOnTop == true && pawn.getColour() == 'W') {
+            if (board.getField(coordinates.getColumn(), coordinates.getRow()).getType() == "HomeWhite" && pawn.getColour() == 'W') {
                 continue;
             }
-            if (board.getField(coordinates.getColumn(), coordinates.getRow()).getType() == "Home" && board.getField(coordinates.getColumn(), coordinates.getRow()).getOnTop() == true && whiteOnTop == false && pawn.getColour() == 'B') {
-                continue;
-            }
-            if (board.getField(coordinates.getColumn(), coordinates.getRow()).getType() == "Home" && board.getField(coordinates.getColumn(), coordinates.getRow()).getOnTop() == false && whiteOnTop == true && pawn.getColour() == 'B') {
-                continue;
-            }
-            if (board.getField(coordinates.getColumn(), coordinates.getRow()).getType() == "Home" && board.getField(coordinates.getColumn(), coordinates.getRow()).getOnTop() == false && whiteOnTop == false && pawn.getColour() == 'W') {
+            if (board.getField(coordinates.getColumn(), coordinates.getRow()).getType() == "HomeBlack" && pawn.getColour() == 'B') {
                 continue;
             }
             coordinatesList.add(coordinates);

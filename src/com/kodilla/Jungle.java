@@ -41,11 +41,12 @@ public class Jungle extends Application {
                 if (boardView.getPawn(column, row) != null) {
                     backgroundAndGrid.getGrid().add(boardView.getPawn(column, row).getImageView(), column, row);
                 }
-                if (boardView.getHome(column, row) != null) {
-                    backgroundAndGrid.getGrid().add(boardView.getHome(column, row).getImageView(), column, row);
-                }
             }
         }
+    }
+
+    public void playerMove() {
+
     }
 
     @Override
@@ -68,15 +69,22 @@ public class Jungle extends Application {
         backgroundAndGrid.getGrid().setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
-                selectedPawn = null;
                 drawPawns();
                 if (!computerMove) {
                     int column = GridPane.getColumnIndex(event.getPickResult().getIntersectedNode());
                     int row = GridPane.getRowIndex(event.getPickResult().getIntersectedNode());
-                    // test
-                    backgroundAndGrid.getLabelWhoseMove().setText(column + " - " + row);
-                    // test
+
+                    if (selectedPawn != null) {
+                        if (pawnMoves.getMoves(selectedPawn, boardView.getPawnCoordinates(selectedPawn).getColumn(), boardView.getPawnCoordinates(selectedPawn).getRow(), whiteOnTop).contains(new Coordinates(column, row, ""))) {
+                            boardView.setPawnPosition(selectedPawn, column, row);
+                        }
+                    }
+
                     Pawn pawn = boardView.getPawn(column, row);
+                    selectedPawn = pawn;
+                    // test
+                    backgroundAndGrid.getLabelWhoseMove().setText(column + " - " + row + " / " + selectedPawn);
+                    // test
                     char colorNotAvailable;
                     if (computerWhitePawns) {
                         colorNotAvailable = 'W';
@@ -85,7 +93,6 @@ public class Jungle extends Application {
                     }
 
                     if (pawn.getColour() != colorNotAvailable) {
-                        selectedPawn = pawn;
                         coordinates.clear();
                         coordinates = pawnMoves.getMoves(pawn, column, row, whiteOnTop);
                         for (int i = 0; i <= numberOfImageViews; i++) {
@@ -102,6 +109,7 @@ public class Jungle extends Application {
                 //boardView.setPawnPosition(pawn, boardView.getPawnCoordinates(pawn).getColumn() + 1, boardView.getPawnCoordinates(pawn).getRow());
                 //drawPawns();
                 //backgroundAndGrid.getLabelWhoseMove().setText(selectedPawn.getName());
+
             }
 
         });

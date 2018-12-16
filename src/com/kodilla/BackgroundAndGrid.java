@@ -4,16 +4,11 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 public class BackgroundAndGrid {
-    private Image imageback = new Image("file:resources/board.png");
-    private BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, true, false);
-    private BackgroundImage backgroundImage = new BackgroundImage(imageback, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
-    private Background background = new Background(backgroundImage);
     private GridPane grid = new GridPane();
     private Font font = new Font("Arial", 16);
     private Color color = Color.rgb(0,0,0);
@@ -21,6 +16,7 @@ public class BackgroundAndGrid {
     private Label labelWhoseMove = new Label();
     private Label labelOnBot = new Label();
     private Button buttonNewGame = new Button();
+    private Board board = new Board();
 
     public BackgroundAndGrid() {
         grid.setAlignment(Pos.TOP_CENTER);
@@ -33,11 +29,16 @@ public class BackgroundAndGrid {
         }
         grid.setHgap(0);
         grid.setVgap(0);
-        grid.setBackground(background);
         //grid.setGridLinesVisible(true);
     }
 
     public void addConstantNodes() {
+        for (int column = 0; column <= 6; column++) {
+            for (int row = 0; row <= 8; row++) {
+                grid.add(board.getField(column, row).getImageView(), column, row);
+            }
+        }
+
         labelOnTop.setFont(font);
         labelOnTop.setTextFill(color);
         labelWhoseMove.setFont(font);
