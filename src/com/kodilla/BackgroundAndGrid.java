@@ -35,7 +35,9 @@ public class BackgroundAndGrid {
         grid.setVgap(0);
         grid.setBackground(background);
         //grid.setGridLinesVisible(true);
+    }
 
+    public void addConstantNodes() {
         labelOnTop.setFont(font);
         labelOnTop.setTextFill(color);
         labelWhoseMove.setFont(font);

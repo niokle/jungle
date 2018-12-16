@@ -8,6 +8,10 @@ public class BoardView {
 
     public BoardView(boolean whiteOnTop) {
         this.whiteOnTop = whiteOnTop;
+        resetPositions();
+        }
+
+    public void resetPositions() {
         char colourOnTop;
         char colourOnBot;
         if (whiteOnTop) {
@@ -46,4 +50,28 @@ public class BoardView {
         return home[column][row];
     }
 
+    public void setPawnPosition(Pawn pawn, int column, int row) {
+        for (int c = 0; c <= 6; c++) {
+            for (int r = 0; r <= 8; r++) {
+                if (this.pawn[c][r] == pawn) {
+                    this.pawn[c][r] = null;
+                    this.pawn[column][row] = pawn;
+                }
+            }
+        }
+    }
+
+    public Coordinates getPawnCoordinates(Pawn pawn) {
+        int column = 0;
+        int row = 0;
+        for (int c = 0; c <= 6; c++) {
+            for (int r = 0; r <= 8; r++) {
+                if (this.pawn[c][r] == pawn) {
+                    column = c;
+                    row = r;
+                }
+            }
+        }
+        return new Coordinates(column, row, "");
+    }
 }
