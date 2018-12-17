@@ -32,36 +32,36 @@ public class PawnMoves {
                     continue;
                 }
             }
-            if (board.getField(coordinates.getColumn(), coordinates.getRow()).getType() == "Lake" && pawn.getName() != "Rat" && pawn.getName() != "Lion" && pawn.getName() != "Tiger") {
+            if (board.getField(coordinates.getColumn(), coordinates.getRow()).getType() == Field.Type.LAKE && pawn.getName() != Pawn.Name.RAT && pawn.getName() != Pawn.Name.LION && pawn.getName() != Pawn.Name.TIGER) {
                 continue;
             }
-            if (board.getField(coordinates.getColumn(), coordinates.getRow()).getType() == "Lake" && (pawn.getName() == "Lion" || pawn.getName() == "Tiger")) {
+            if (board.getField(coordinates.getColumn(), coordinates.getRow()).getType() == Field.Type.LAKE && (pawn.getName() == Pawn.Name.LION || pawn.getName() == Pawn.Name.TIGER)) {
                 int tempColumn = coordinates.getColumn();
                 int tempRow = coordinates.getRow();
                 switch (coordinates.getName()) {
                     case "moveLeft":
-                        while (board.getField(tempColumn, tempRow).getType() == "Lake") {
+                        while (board.getField(tempColumn, tempRow).getType() == Field.Type.LAKE) {
                             tempRow--;
                         }
                         coordinates.setRow(tempRow);
                         coordinatesList.add(coordinates);
                         continue;
                     case "moveRight":
-                        while (board.getField(tempColumn, tempRow).getType() == "Lake") {
+                        while (board.getField(tempColumn, tempRow).getType() == Field.Type.LAKE) {
                             tempRow++;
                         }
                         coordinates.setRow(tempRow);
                         coordinatesList.add(coordinates);
                         continue;
                     case "moveUp":
-                        while (board.getField(tempColumn, tempRow).getType() == "Lake") {
+                        while (board.getField(tempColumn, tempRow).getType() == Field.Type.LAKE) {
                             tempColumn--;
                         }
                         coordinates.setColumn(tempColumn);
                         coordinatesList.add(coordinates);
                         continue;
                     case "moveDown":
-                        while (board.getField(tempColumn, tempRow).getType() == "Lake") {
+                        while (board.getField(tempColumn, tempRow).getType() == Field.Type.LAKE) {
                             tempColumn++;
                         }
                         coordinates.setColumn(tempColumn);
@@ -69,10 +69,10 @@ public class PawnMoves {
                         continue;
                 }
             }
-            if (board.getField(coordinates.getColumn(), coordinates.getRow()).getType() == "HomeWhite" && pawn.getColour() == 'W') {
+            if (board.getField(coordinates.getColumn(), coordinates.getRow()).getType() == Field.Type.HOME_WHITE && pawn.getColour() == 'W') {
                 continue;
             }
-            if (board.getField(coordinates.getColumn(), coordinates.getRow()).getType() == "HomeBlack" && pawn.getColour() == 'B') {
+            if (board.getField(coordinates.getColumn(), coordinates.getRow()).getType() == Field.Type.HOME_BLACK && pawn.getColour() == 'B') {
                 continue;
             }
             coordinatesList.add(coordinates);

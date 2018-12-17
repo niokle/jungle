@@ -17,13 +17,17 @@ public class BackgroundAndGrid {
     private Label labelOnBot = new Label();
     private Button buttonNewGame = new Button();
     private Board board = new Board();
+    private static final int gridNumberOfColumns = 10;
+    private static final int gridNumberOfRows = 8;
+    private static final int boardNumberOfColumns = 6;
+    private static final int boardNumberOfRows = 8;
 
     public BackgroundAndGrid() {
         grid.setAlignment(Pos.TOP_CENTER);
         grid.setPadding(new Insets(0, 0, 0, 316));
-        for (int column = 0; column <= 10; column++) {
+        for (int column = 0; column <= gridNumberOfColumns; column++) {
             grid.getColumnConstraints().add(new ColumnConstraints(79));
-            for (int row = 0; row <= 8; row++) {
+            for (int row = 0; row <= gridNumberOfRows; row++) {
                 grid.getRowConstraints().add(new RowConstraints(79));
             }
         }
@@ -33,8 +37,8 @@ public class BackgroundAndGrid {
     }
 
     public void addConstantNodes() {
-        for (int column = 0; column <= 6; column++) {
-            for (int row = 0; row <= 8; row++) {
+        for (int column = 0; column <= boardNumberOfColumns; column++) {
+            for (int row = 0; row <= boardNumberOfRows; row++) {
                 grid.add(board.getField(column, row).getImageView(), column, row);
             }
         }

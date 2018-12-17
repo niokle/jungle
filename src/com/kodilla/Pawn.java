@@ -4,14 +4,18 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class Pawn {
-    private String name;
+    private Name name;
     private char colour;
     private int strength;
     private Image image;
     private boolean active;
     private ImageView imageView;
 
-    public Pawn(String name, char colour, int strength, String imagePath, boolean active) {
+    public enum Name {
+        LION, TIGER, DOG, CAT, RAT, PHANTER, WOLF, ELEPHANT;
+    }
+
+    public Pawn(Name name, char colour, int strength, String imagePath, boolean active) {
         this.name = name;
         this.colour = colour;
         this.strength = strength;
@@ -22,7 +26,7 @@ public class Pawn {
         imageView.setFitWidth(79);
     }
 
-    public String getName() {
+    public Name getName() {
         return name;
     }
 
