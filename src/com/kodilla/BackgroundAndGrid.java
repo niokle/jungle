@@ -3,6 +3,7 @@ package com.kodilla;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -10,11 +11,11 @@ import javafx.scene.text.Font;
 
 public class BackgroundAndGrid {
     private GridPane grid = new GridPane();
-    private Font font = new Font("Arial", 16);
+    private Font font = new Font("Arial", 12);
     private Color color = Color.rgb(0,0,0);
-    private Label labelOnTop = new Label();
+    private CheckBox checkBoxTop = new CheckBox();
     private Label labelWhoseMove = new Label();
-    private Label labelOnBot = new Label();
+    private CheckBox checkBoxBot = new CheckBox();
     private Button buttonNewGame = new Button();
     private Board board = new Board();
     private static final int gridNumberOfColumns = 10;
@@ -43,40 +44,44 @@ public class BackgroundAndGrid {
             }
         }
 
-        labelOnTop.setFont(font);
-        labelOnTop.setTextFill(color);
+        checkBoxTop.setFont(font);
+        checkBoxTop.setTextFill(color);
         labelWhoseMove.setFont(font);
         labelWhoseMove.setTextFill(color);
-        labelOnBot.setFont(font);
-        labelOnBot.setTextFill(color);
-        grid.add(labelOnTop, 8, 1, 10, 1);
+        checkBoxBot.setFont(font);
+        checkBoxBot.setTextFill(color);
+        grid.add(checkBoxTop, 8, 1, 10, 1);
         grid.add(labelWhoseMove,8,3, 10,3);
-        grid.add(labelOnBot, 8, 5, 10, 5);
+        grid.add(checkBoxBot, 8, 5, 10, 5);
 
         buttonNewGame.setFont(font);
         buttonNewGame.setTextFill(color);
         buttonNewGame.setText("Nowa gra");
-        grid.add(buttonNewGame,8, 4, 9,4);
+        grid.add(buttonNewGame,8, 4, 8,4);
     }
 
     public GridPane getGrid() {
         return grid;
     }
 
-    public Label getLabelOnTop() {
-        return labelOnTop;
+    public CheckBox getCheckBoxTop() {
+        return checkBoxTop;
     }
 
     public Label getLabelWhoseMove() {
         return labelWhoseMove;
     }
 
-    public Label getLabelOnBot() {
-        return labelOnBot;
+    public CheckBox getCheckBoxBot() {
+        return checkBoxBot;
     }
 
     public Button getButtonNewGame() {
         return buttonNewGame;
+    }
+
+    public Board getBoard() {
+        return board;
     }
 
 }

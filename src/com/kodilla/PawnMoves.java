@@ -75,6 +75,11 @@ public class PawnMoves {
             if (board.getField(coordinates.getColumn(), coordinates.getRow()).getType() == Field.Type.HOME_BLACK && pawn.getColour() == 'B') {
                 continue;
             }
+            if (boardView.getPawn(coordinates.getColumn(), coordinates.getRow()) != null) {
+                if (pawn.getName() == Pawn.Name.RAT && board.getField(column, row).getType() == Field.Type.LAKE && boardView.getPawn(coordinates.getColumn(), coordinates.getRow()).getName() == Pawn.Name.ELEPHANT) {
+                    continue;
+                }
+            }
             coordinatesList.add(coordinates);
         }
         return coordinatesList;
