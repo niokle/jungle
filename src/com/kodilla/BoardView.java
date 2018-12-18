@@ -75,4 +75,18 @@ public class BoardView {
         }
         return new Coordinates(column, row, "");
     }
+
+    public Pawn getPawnByNameColor(Pawn.Name name, char color) {
+        Pawn pawn = null;
+        for (int c = 0; c <= boardNumberOfColumns; c++) {
+            for (int r = 0; r <= boardNumberOfRows; r++) {
+                if (this.pawn[c][r] != null) {
+                    if (this.pawn[c][r].getName() == name && this.pawn[c][r].getColour() == color) {
+                        pawn = this.pawn[c][r];
+                    }
+                }
+            }
+        }
+        return pawn;
+    }
 }

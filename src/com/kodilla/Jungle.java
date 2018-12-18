@@ -29,6 +29,7 @@ public class Jungle extends Application {
     private ArrayList<Coordinates> coordinates = new ArrayList<>();
     private Pawn selectedPawn;
     private Rules rules = new Rules();
+    private ComputerMove computerMove = new ComputerMove();
 
     public static void main(String[] args) {
         launch(args);
@@ -38,6 +39,11 @@ public class Jungle extends Application {
        boardView.resetPositions();
        drawPawns();
        setupTexts();
+       if (playerOneMove) {
+           playerOneMove();
+       } else {
+           playerTwoMove();
+       }
     }
 
     public void drawPawns() {
@@ -104,6 +110,11 @@ public class Jungle extends Application {
             setupTexts();
         }
         drawPawns();
+        if (playerOneMove) {
+            playerOneMove();
+        } else {
+            playerTwoMove();
+        }
     }
 
     public void setupTexts() {
@@ -131,6 +142,36 @@ public class Jungle extends Application {
             backgroundAndGrid.getLabelWhoseMove().setText("Ruch gracza 1");
         } else {
             backgroundAndGrid.getLabelWhoseMove().setText("Ruch gracza 2");
+        }
+    }
+
+    public void playerOneMove() {
+        char color;
+        if (whitePlayeOne) {
+            color = 'W';
+        } else {
+            color = 'B';
+        }
+        if (computerPlayerOne) {
+            computerMove.runComputerMove(color, boardView);
+            playerOneMove = false;
+            drawPawns();
+            playerTwoMove();
+        }
+    }
+
+    public void playerTwoMove() {
+        char color;
+        if (whitePlayeOne) {
+            color = 'B';
+        } else {
+            color = 'W';
+        }
+        if (computerPlayerTwo) {
+            computerMove.runComputerMove(color, boardView);
+            playerOneMove = true;
+            drawPawns();
+            playerOneMove();
         }
     }
 
