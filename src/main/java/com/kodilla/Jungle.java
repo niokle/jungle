@@ -20,10 +20,12 @@ public class Jungle extends Application {
     private boolean endOfGame = false;
     private boolean computerPlayerOne = false;
     private boolean computerPlayerTwo = false;
+    private int computerPlayerOneLevel = 0;
+    private int computerPlayerTwoLevel = 0;
     private boolean playerOneMove = true;
     private BoardView boardView = new BoardView(whiteOnTop);
     private PawnMoves pawnMoves = new PawnMoves(boardView);
-    private Image image = new Image("file:resources/move.png");
+    private Image image = new Image("file:src/main/resources/move.png");
     private ImageView imageView[] = {new ImageView(image), new ImageView(image), new ImageView(image), new ImageView(image)};
     private int numberOfImageViews;
     private ArrayList<Coordinates> coordinates = new ArrayList<>();
@@ -153,7 +155,7 @@ public class Jungle extends Application {
             color = 'B';
         }
         if (computerPlayerOne) {
-            computerMove.runComputerMove(color, boardView);
+            computerMove.runComputerMove(color, boardView, whiteOnTop, computerPlayerOneLevel);
             playerOneMove = false;
             drawPawns();
             playerTwoMove();
@@ -168,7 +170,7 @@ public class Jungle extends Application {
             color = 'W';
         }
         if (computerPlayerTwo) {
-            computerMove.runComputerMove(color, boardView);
+            computerMove.runComputerMove(color, boardView, whiteOnTop, computerPlayerTwoLevel);
             playerOneMove = true;
             drawPawns();
             playerOneMove();
