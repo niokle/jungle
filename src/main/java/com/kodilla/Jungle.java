@@ -1,6 +1,7 @@
 package com.kodilla;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -20,8 +21,8 @@ public class Jungle extends Application {
     private boolean endOfGame = false;
     private boolean computerPlayerOne = false;
     private boolean computerPlayerTwo = false;
-    private Level computerPlayerOneLevel = Level.MEDIUM;
-    private Level computerPlayerTwoLevel = Level.MEDIUM;
+    private Level computerPlayerOneLevel = Level.EASY;
+    private Level computerPlayerTwoLevel = Level.EASY;
     private boolean playerOneMove = true;
     private BoardView boardView = new BoardView(whiteOnTop);
     private PawnMoves pawnMoves = new PawnMoves(boardView);
@@ -191,6 +192,15 @@ public class Jungle extends Application {
         }
     }
 
+    public void fillLevels() {
+        backgroundAndGrid.getChoiceBoxTop().setItems(FXCollections.observableArrayList());
+        backgroundAndGrid.getChoiceBoxTop().setItems(FXCollections.observableArrayList(Level.values()));
+        backgroundAndGrid.getChoiceBoxTop().getSelectionModel().selectFirst();
+        backgroundAndGrid.getChoiceBoxBot().setItems(FXCollections.observableArrayList());
+        backgroundAndGrid.getChoiceBoxBot().setItems(FXCollections.observableArrayList(Level.values()));
+        backgroundAndGrid.getChoiceBoxBot().getSelectionModel().selectFirst();
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         setupTexts();
@@ -208,12 +218,15 @@ public class Jungle extends Application {
                 } else {
                     computerPlayerTwo = true;
                 }
+                fillLevels();
+                backgroundAndGrid.getChoiceBoxTop().setVisible(true);
             } else {
                 if (whitePlayeOne && whiteOnTop || !whitePlayeOne && !whiteOnTop) {
                     computerPlayerOne = false;
                 } else {
                     computerPlayerTwo = false;
                 }
+                backgroundAndGrid.getChoiceBoxTop().setVisible(false);
             }
             setupTexts();
         });
@@ -225,14 +238,25 @@ public class Jungle extends Application {
                 } else {
                     computerPlayerOne = true;
                 }
+                fillLevels();
+                backgroundAndGrid.getChoiceBoxBot().setVisible(true);
             } else {
                 if (whitePlayeOne && whiteOnTop || !whitePlayeOne && !whiteOnTop) {
                     computerPlayerTwo = false;
                 } else {
                     computerPlayerOne = false;
                 }
+                backgroundAndGrid.getChoiceBoxBot().setVisible(false);
             }
             setupTexts();
+        });
+
+        backgroundAndGrid.getChoiceBoxTop().setOnAction((event) -> {
+            computerPlayerOneLevel = backgroundAndGrid.getChoiceBoxTop().getValue();
+        });
+
+        backgroundAndGrid.getChoiceBoxBot().setOnAction((event) -> {
+            computerPlayerTwoLevel = backgroundAndGrid.getChoiceBoxBot().getValue();
         });
 
         backgroundAndGrid.getGrid().setOnMouseClicked(new EventHandler<MouseEvent>() {

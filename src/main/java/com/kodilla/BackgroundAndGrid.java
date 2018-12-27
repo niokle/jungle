@@ -2,9 +2,7 @@ package com.kodilla;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -22,6 +20,8 @@ public class BackgroundAndGrid {
     private static final int gridNumberOfRows = 8;
     private static final int boardNumberOfColumns = 6;
     private static final int boardNumberOfRows = 8;
+    private ChoiceBox<Jungle.Level> choiceBoxTop = new ChoiceBox<>();
+    private ChoiceBox<Jungle.Level> choiceBoxBot = new ChoiceBox<>();
 
     public BackgroundAndGrid() {
         grid.setAlignment(Pos.TOP_CENTER);
@@ -51,9 +51,12 @@ public class BackgroundAndGrid {
         checkBoxBot.setFont(font);
         checkBoxBot.setTextFill(color);
         grid.add(checkBoxTop, 8, 1, 10, 1);
+        grid.add(choiceBoxTop, 8, 1, 10, 2);
         grid.add(labelWhoseMove,8,3, 10,3);
         grid.add(checkBoxBot, 8, 5, 10, 5);
-
+        grid.add(choiceBoxBot, 8, 5, 10, 6);
+        //choiceBoxTop.setVisible(false);
+        //choiceBoxBot.setVisible(false);
         buttonNewGame.setFont(font);
         buttonNewGame.setTextFill(color);
         buttonNewGame.setText("Nowa gra");
@@ -84,4 +87,11 @@ public class BackgroundAndGrid {
         return board;
     }
 
+    public ChoiceBox<Jungle.Level> getChoiceBoxTop() {
+        return choiceBoxTop;
+    }
+
+    public ChoiceBox<Jungle.Level> getChoiceBoxBot() {
+        return choiceBoxBot;
+    }
 }

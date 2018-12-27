@@ -12,25 +12,25 @@ public class ComputerAiMedium {
     private ArrayList<Pawn> pawnsList = new ArrayList<>();
     private Random random = new Random();
     private PawnMoves pawnMoves;
+    private Coordinates coordinatesToWin;
+    private ArrayList<Coordinates> coordinates = new ArrayList<>();
 
     public ComputerAiMedium(char color, BoardView boardView, boolean whiteOnTop) {
         this.color = color;
         this.boardView = boardView;
         this.whiteOnTop = whiteOnTop;
-    }
-
-    public Pawn getPawn(){
-        Coordinates coordinatesToWin;
-        int nearstPawn = 0;
-        double nearstDistance = 100;
-        double distance = 0;
-        pawnMoves = new PawnMoves(boardView);
-
         if (color == 'W' && whiteOnTop || color == 'B' && !whiteOnTop) {
             coordinatesToWin = new Coordinates(3, 8, "");
         } else {
             coordinatesToWin = new Coordinates(3, 0, "");
         }
+        pawnMoves = new PawnMoves(boardView);
+    }
+
+    public Pawn getPawn(){
+        int nearstPawn = 0;
+        double nearstDistance = 100;
+        double distance = 0;
 
         pawnsList.clear();
         for (int column = 0; column <= boardNumberOfColumns; column++) {
@@ -53,6 +53,18 @@ public class ComputerAiMedium {
     public Coordinates getCoordinates(Pawn pawn) {
         int column = boardView.getPawnCoordinates(pawn).getColumn();
         int row = boardView.getPawnCoordinates(pawn).getRow();
-        return pawnMoves.getMoves(pawn, column, row, whiteOnTop).get(random.nextInt(pawnMoves.getMoves(pawn, column, row, whiteOnTop).size()));
+        int nearstCoordinate = 0;
+        double nearstDistance = 100;
+        double distance = 0;
+
+        for (Coordinates c : pawnMoves.getMoves(pawn, column, row, whiteOnTop)) {
+            coordinates.add(c);
+            distance = Math.sqrt(Math.pow((coordinatesToWin.getColumn() - c.getColumn()), 2) + Math.pow((coordinatesToWin.getRow() - c.getRow()), 2));
+            if (distance < nearstDistance) {
+                nearstDistance = distance;
+                nearstCoordinate = coordinates.size() - 1;
+            }
+        }
+        return coordinates.get(nearstCoordinate);
     }
 }

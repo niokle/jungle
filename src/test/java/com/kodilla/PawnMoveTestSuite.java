@@ -2,8 +2,11 @@ package com.kodilla;
 
 import org.junit.Assert;
 import org.junit.Test;
+import org.mockito.Mock;
 
 import java.util.ArrayList;
+
+import static org.mockito.Mockito.mock;
 
 public class PawnMoveTestSuite {
 
@@ -12,8 +15,8 @@ public class PawnMoveTestSuite {
         //Given
         boolean whiteOnTop = true;
         char colorOnTop = 'W';
-        BoardView boardView = new BoardView(whiteOnTop);
-        PawnMoves pawnMoves = new PawnMoves(boardView);
+        BoardView boardViewMock = mock(BoardView.class);
+        PawnMoves pawnMoves = new PawnMoves(boardViewMock);
 
         //When
         Pawn pawn1 = new Pawn(Pawn.Name.RAT, colorOnTop, 1, "file:src/main/resources/pawns/rat" + colorOnTop + ".png", true);
