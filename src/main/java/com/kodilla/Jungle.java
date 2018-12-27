@@ -20,8 +20,8 @@ public class Jungle extends Application {
     private boolean endOfGame = false;
     private boolean computerPlayerOne = false;
     private boolean computerPlayerTwo = false;
-    private Level computerPlayerOneLevel = Level.EASY;
-    private Level computerPlayerTwoLevel = Level.EASY;
+    private Level computerPlayerOneLevel = Level.MEDIUM;
+    private Level computerPlayerTwoLevel = Level.MEDIUM;
     private boolean playerOneMove = true;
     private BoardView boardView = new BoardView(whiteOnTop);
     private PawnMoves pawnMoves = new PawnMoves(boardView);
