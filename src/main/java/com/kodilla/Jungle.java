@@ -20,8 +20,8 @@ public class Jungle extends Application {
     private boolean endOfGame = false;
     private boolean computerPlayerOne = false;
     private boolean computerPlayerTwo = false;
-    private int computerPlayerOneLevel = 0;
-    private int computerPlayerTwoLevel = 0;
+    private Level computerPlayerOneLevel = Level.EASY;
+    private Level computerPlayerTwoLevel = Level.EASY;
     private boolean playerOneMove = true;
     private BoardView boardView = new BoardView(whiteOnTop);
     private PawnMoves pawnMoves = new PawnMoves(boardView);
@@ -33,19 +33,24 @@ public class Jungle extends Application {
     private Rules rules = new Rules();
     private ComputerMove computerMove = new ComputerMove();
 
+    public enum Level {
+        EASY, MEDIUM, HARD;
+    }
+
     public static void main(String[] args) {
         launch(args);
     }
 
     public void newGame() {
-       boardView.resetPositions();
-       drawPawns();
-       setupTexts();
-       if (playerOneMove) {
-           playerOneMove();
-       } else {
-           playerTwoMove();
-       }
+        endOfGame = false;
+        boardView.resetPositions();
+        drawPawns();
+        setupTexts();
+        if (playerOneMove) {
+            playerOneMove();
+        } else {
+            playerTwoMove();
+        }
     }
 
     public void drawPawns() {
@@ -88,6 +93,20 @@ public class Jungle extends Application {
         }
     }
 
+    public void movePawnComputer(char color) {
+        computerMove.runComputerMove(color, boardView, whiteOnTop, computerPlayerOneLevel, rules, backgroundAndGrid, whitePlayeOne, endOfGame);
+        playerOneMove = !playerOneMove;
+        drawPawns();
+        if (!endOfGame) {
+            setupTexts();
+        }
+        if (playerOneMove) {
+            playerOneMove();
+        } else {
+            playerTwoMove();
+        }
+    }
+
     public void movePawn(Pawn selectedPawn, int column, int row) {
         Coordinates coordinates = new Coordinates(column, row, "");
         Rules.Win win;
@@ -104,10 +123,11 @@ public class Jungle extends Application {
                 if (selectedPawn.getActive()) {
                     boardView.setPawnPosition(selectedPawn, column, row);
                 }
-                playerOneMove = !playerOneMove;
+                //playerOneMove = !playerOneMove;
                 break;
             }
         }
+        playerOneMove = !playerOneMove;
         if (!endOfGame) {
             setupTexts();
         }
@@ -155,10 +175,7 @@ public class Jungle extends Application {
             color = 'B';
         }
         if (computerPlayerOne) {
-            computerMove.runComputerMove(color, boardView, whiteOnTop, computerPlayerOneLevel);
-            playerOneMove = false;
-            drawPawns();
-            playerTwoMove();
+            movePawnComputer(color);
         }
     }
 
@@ -170,10 +187,7 @@ public class Jungle extends Application {
             color = 'W';
         }
         if (computerPlayerTwo) {
-            computerMove.runComputerMove(color, boardView, whiteOnTop, computerPlayerTwoLevel);
-            playerOneMove = true;
-            drawPawns();
-            playerOneMove();
+            movePawnComputer(color);
         }
     }
 

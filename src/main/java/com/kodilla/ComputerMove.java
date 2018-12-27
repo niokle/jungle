@@ -1,43 +1,40 @@
 package com.kodilla;
 
-import java.util.Random;
-
 public class ComputerMove {
-    private static final int boardNumberOfColumns = 6;
-    private static final int boardNumberOfRows = 8;
+    private Board board = new Board();
 
-    public void runComputerMove ( char color, BoardView boardView,boolean whiteOnTop, int level){
-        PawnMoves pawnMoves = new PawnMoves(boardView);
-        int coordinateChose = 0;
-        int i = 0;
-        Random random = new Random();
+    public void runComputerMove (char color, BoardView boardView, boolean whiteOnTop, Jungle.Level level, Rules rules, BackgroundAndGrid backgroundAndGrid, boolean whitePlayeOne, boolean endOfGame) {
+        Pawn pawn = null;
+        Coordinates coordinates = null;
+        Rules.Win win;
 
-        for (int column = 0; column <= boardNumberOfColumns; column++) {
-            for (int row = 0; row <= boardNumberOfRows; row++) {
-                if (boardView.getPawn(column, row) != null) {
-                    if (boardView.getPawn(column, row).getColour() == color) {
-
-                        coordinateChose = random.nextInt(pawnMoves.getMoves(boardView.getPawn(column, row), column, row, whiteOnTop).size());
-                        i = 0;
-
-                        for (Coordinates c : pawnMoves.getMoves(boardView.getPawn(column, row), column, row, whiteOnTop)) {
-                            if (boardView.getPawn(c.getColumn(), c.getRow()) != null) {
-                                if (boardView.getPawn(c.getColumn(), c.getRow()).getActive() == true && boardView.getPawn(c.getColumn(), c.getRow()).getCurrentStrength() <= boardView.getPawn(column, row).getCurrentStrength()) {
-                                    boardView.getPawn(c.getColumn(), c.getRow()).setActive(false);
-                                    boardView.setPawnPosition(boardView.getPawn(column, row), c.getColumn(), c.getRow());
-                                    continue;
-                                }
-                            } else {
-                                if (i == coordinateChose) {
-                                    boardView.setPawnPosition(boardView.getPawn(column, row), c.getColumn(), c.getRow());
-                                    continue;
-                                }
-                            }
-                            i++;
-                        }
-                    }
-                }
-            }
+        switch (level) {
+            case EASY:
+                ComputerAiEasy computerAiEasy = new ComputerAiEasy(color, boardView, whiteOnTop);
+                pawn = computerAiEasy.getPawn();
+                coordinates = computerAiEasy.getCoordinates(pawn);
+                break;
+            case MEDIUM:
+                ComputerAiMedium computerAiMedium = new ComputerAiMedium(color, boardView, whiteOnTop);
+                pawn = computerAiMedium.getPawn();
+                coordinates = computerAiMedium.getCoordinates(pawn);
+                break;
+            case HARD:
+                ComputerAiHard computerAiHard = new ComputerAiHard(color, boardView, whiteOnTop);
+                pawn = computerAiHard.getPawn();
+                coordinates = computerAiHard.getCoordinates(pawn);
+                break;
+        }
+        win = rules.runRules(pawn, coordinates.getColumn(), coordinates.getRow(), board, boardView);
+        if (win == Rules.Win.WHITE && whitePlayeOne || win == Rules.Win.BLACK && !whitePlayeOne) {
+            backgroundAndGrid.getLabelWhoseMove().setText("Gracz 1 WYGRAŁ!");
+            endOfGame = true;
+        } else if (win == Rules.Win.BLACK && whitePlayeOne || win == Rules.Win.WHITE && !whitePlayeOne) {
+            backgroundAndGrid.getLabelWhoseMove().setText("Gracz 2 WYGRAŁ!");
+            endOfGame = true;
+        }
+        if (pawn.getActive()) {
+            boardView.setPawnPosition(pawn, coordinates.getColumn(), coordinates.getRow());
         }
     }
 }
