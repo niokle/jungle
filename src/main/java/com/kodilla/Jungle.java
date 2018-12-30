@@ -42,6 +42,7 @@ public class Jungle extends Application {
         launch(args);
     }
 
+
     public void newGame() {
         endOfGame = false;
         boardView.resetPositions();
