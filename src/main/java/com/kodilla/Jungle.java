@@ -17,7 +17,7 @@ public class Jungle extends Application {
     private static final int boardNumberOfRows = 8;
     private BackgroundAndGrid backgroundAndGrid = new BackgroundAndGrid();
     private boolean whiteOnTop = true;
-    private boolean whitePlayeOne = true;
+    private boolean whitePlayerOne = true;
     private boolean endOfGame = false;
     private boolean computerPlayerOne = false;
     private boolean computerPlayerTwo = false;
@@ -33,6 +33,7 @@ public class Jungle extends Application {
     private Pawn selectedPawn;
     private Rules rules = new Rules();
     private ComputerMove computerMove = new ComputerMove();
+    private Win win = new Win(whitePlayerOne, backgroundAndGrid);
 
     public enum Level {
         EASY, MEDIUM, HARD;
@@ -96,7 +97,8 @@ public class Jungle extends Application {
     }
 
     public void movePawnComputer(char color, Level level) {
-        computerMove.runComputerMove(color, boardView, whiteOnTop, level, rules, backgroundAndGrid, whitePlayeOne, endOfGame);
+        computerMove.runComputerMove(color, boardView, whiteOnTop, level, rules, backgroundAndGrid, whitePlayerOne, endOfGame, win);
+        endOfGame = win.getEndOfGame();
         playerOneMove = !playerOneMove;
         drawPawns();
         if (!endOfGame) {
@@ -111,21 +113,15 @@ public class Jungle extends Application {
 
     public void movePawn(Pawn selectedPawn, int column, int row) {
         Coordinates coordinates = new Coordinates(column, row, "");
-        Rules.Win win;
+        Rules.Win rulesWin;
         for (Coordinates c : pawnMoves.getMoves(selectedPawn, boardView.getPawnCoordinates(selectedPawn).getColumn(), boardView.getPawnCoordinates(selectedPawn).getRow(), whiteOnTop)) {
             if (c.getColumn() == coordinates.getColumn() && c.getRow() == coordinates.getRow()) {
-                win = rules.runRules(selectedPawn, column, row, backgroundAndGrid.getBoard(), boardView);
-                if (win == Rules.Win.WHITE && whitePlayeOne || win == Rules.Win.BLACK && !whitePlayeOne) {
-                    backgroundAndGrid.getLabelWhoseMove().setText("Gracz 1 WYGRAŁ!");
-                    endOfGame = true;
-                } else if (win == Rules.Win.BLACK && whitePlayeOne || win == Rules.Win.WHITE && !whitePlayeOne) {
-                    backgroundAndGrid.getLabelWhoseMove().setText("Gracz 2 WYGRAŁ!");
-                    endOfGame = true;
-                }
+                rulesWin = rules.runRules(selectedPawn, column, row, backgroundAndGrid.getBoard(), boardView);
+                win.checkWin(rulesWin);
+                endOfGame = win.getEndOfGame();
                 if (selectedPawn.getActive()) {
                     boardView.setPawnPosition(selectedPawn, column, row);
                 }
-                //playerOneMove = !playerOneMove;
                 break;
             }
         }
@@ -155,7 +151,7 @@ public class Jungle extends Application {
             bot = ": człowiek";
         }
 
-        if (whitePlayeOne && whiteOnTop || !whitePlayeOne && !whiteOnTop) {
+        if (whitePlayerOne && whiteOnTop || !whitePlayerOne && !whiteOnTop) {
             backgroundAndGrid.getCheckBoxTop().setText("Gracz 1" + top);
             backgroundAndGrid.getCheckBoxBot().setText("Gracz 2" + bot);
         } else {
@@ -171,7 +167,7 @@ public class Jungle extends Application {
 
     public void playerOneMove() {
         char color;
-        if (whitePlayeOne) {
+        if (whitePlayerOne) {
             color = 'W';
         } else {
             color = 'B';
@@ -183,7 +179,7 @@ public class Jungle extends Application {
 
     public void playerTwoMove() {
         char color;
-        if (whitePlayeOne) {
+        if (whitePlayerOne) {
             color = 'B';
         } else {
             color = 'W';
@@ -214,7 +210,7 @@ public class Jungle extends Application {
 
         backgroundAndGrid.getCheckBoxTop().setOnAction((event) -> {
             if (backgroundAndGrid.getCheckBoxTop().isSelected()) {
-                if (whitePlayeOne && whiteOnTop || !whitePlayeOne && !whiteOnTop) {
+                if (whitePlayerOne && whiteOnTop || !whitePlayerOne && !whiteOnTop) {
                     computerPlayerOne = true;
                 } else {
                     computerPlayerTwo = true;
@@ -222,7 +218,7 @@ public class Jungle extends Application {
                 fillLevels();
                 backgroundAndGrid.getChoiceBoxTop().setVisible(true);
             } else {
-                if (whitePlayeOne && whiteOnTop || !whitePlayeOne && !whiteOnTop) {
+                if (whitePlayerOne && whiteOnTop || !whitePlayerOne && !whiteOnTop) {
                     computerPlayerOne = false;
                 } else {
                     computerPlayerTwo = false;
@@ -234,7 +230,7 @@ public class Jungle extends Application {
 
         backgroundAndGrid.getCheckBoxBot().setOnAction((event) -> {
             if (backgroundAndGrid.getCheckBoxBot().isSelected()) {
-                if (whitePlayeOne && whiteOnTop || !whitePlayeOne && !whiteOnTop) {
+                if (whitePlayerOne && whiteOnTop || !whitePlayerOne && !whiteOnTop) {
                     computerPlayerTwo = true;
                 } else {
                     computerPlayerOne = true;
@@ -242,7 +238,7 @@ public class Jungle extends Application {
                 fillLevels();
                 backgroundAndGrid.getChoiceBoxBot().setVisible(true);
             } else {
-                if (whitePlayeOne && whiteOnTop || !whitePlayeOne && !whiteOnTop) {
+                if (whitePlayerOne && whiteOnTop || !whitePlayerOne && !whiteOnTop) {
                     computerPlayerTwo = false;
                 } else {
                     computerPlayerOne = false;
@@ -281,7 +277,7 @@ public class Jungle extends Application {
                         }
                     } else if (pawn != null) {
                         char possibleColor;
-                        if (whitePlayeOne && playerOneMove || !whitePlayeOne && !playerOneMove) {
+                        if (whitePlayerOne && playerOneMove || !whitePlayerOne && !playerOneMove) {
                             possibleColor = 'W';
                         } else {
                             possibleColor = 'B';

@@ -3,10 +3,10 @@ package com.kodilla;
 public class ComputerMove {
     private Board board = new Board();
 
-    public void runComputerMove (char color, BoardView boardView, boolean whiteOnTop, Jungle.Level level, Rules rules, BackgroundAndGrid backgroundAndGrid, boolean whitePlayeOne, boolean endOfGame) {
+    public void runComputerMove (char color, BoardView boardView, boolean whiteOnTop, Jungle.Level level, Rules rules, BackgroundAndGrid backgroundAndGrid, boolean whitePlayeOne, boolean endOfGame, Win win) {
         Pawn pawn = null;
         Coordinates coordinates = null;
-        Rules.Win win;
+        Rules.Win rulesWin;
 
         switch (level) {
             case EASY:
@@ -25,14 +25,8 @@ public class ComputerMove {
                 coordinates = computerAiHard.getCoordinates(pawn);
                 break;
         }
-        win = rules.runRules(pawn, coordinates.getColumn(), coordinates.getRow(), board, boardView);
-        if (win == Rules.Win.WHITE && whitePlayeOne || win == Rules.Win.BLACK && !whitePlayeOne) {
-            backgroundAndGrid.getLabelWhoseMove().setText("Gracz 1 WYGRAŁ!");
-            endOfGame = true;
-        } else if (win == Rules.Win.BLACK && whitePlayeOne || win == Rules.Win.WHITE && !whitePlayeOne) {
-            backgroundAndGrid.getLabelWhoseMove().setText("Gracz 2 WYGRAŁ!");
-            endOfGame = true;
-        }
+        rulesWin = rules.runRules(pawn, coordinates.getColumn(), coordinates.getRow(), board, boardView);
+        win.checkWin(rulesWin);
         if (pawn.getActive()) {
             boardView.setPawnPosition(pawn, coordinates.getColumn(), coordinates.getRow());
         }
