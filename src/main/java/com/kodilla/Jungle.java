@@ -95,8 +95,8 @@ public class Jungle extends Application {
         }
     }
 
-    public void movePawnComputer(char color) {
-        computerMove.runComputerMove(color, boardView, whiteOnTop, computerPlayerOneLevel, rules, backgroundAndGrid, whitePlayeOne, endOfGame);
+    public void movePawnComputer(char color, Level level) {
+        computerMove.runComputerMove(color, boardView, whiteOnTop, level, rules, backgroundAndGrid, whitePlayeOne, endOfGame);
         playerOneMove = !playerOneMove;
         drawPawns();
         if (!endOfGame) {
@@ -177,7 +177,7 @@ public class Jungle extends Application {
             color = 'B';
         }
         if (computerPlayerOne) {
-            movePawnComputer(color);
+            movePawnComputer(color, computerPlayerOneLevel);
         }
     }
 
@@ -189,7 +189,7 @@ public class Jungle extends Application {
             color = 'W';
         }
         if (computerPlayerTwo) {
-            movePawnComputer(color);
+            movePawnComputer(color, computerPlayerTwoLevel);
         }
     }
 
