@@ -8,9 +8,8 @@ public class Pawn {
     private char color;
     private int strength;
     private int currentStrength;
-    private Image image;
     private boolean active;
-    private ImageView imageView;
+    private String imagePath;
 
     public enum Name {
         LION, TIGER, DOG, CAT, RAT, PHANTER, WOLF, ELEPHANT;
@@ -21,11 +20,8 @@ public class Pawn {
         this.color = color;
         this.strength = strength;
         currentStrength = strength;
-        this.image = new Image(imagePath);
         this.active = active;
-        imageView = new ImageView(image);
-        imageView.setFitHeight(79);
-        imageView.setFitWidth(79);
+        this.imagePath = imagePath;
     }
 
     public Name getName() {
@@ -40,15 +36,16 @@ public class Pawn {
         return currentStrength;
     }
 
-    public Image getImage() {
-        return image;
-    }
 
     public boolean getActive() {
         return active;
     }
 
     public ImageView getImageView() {
+        Image image = new Image(imagePath);
+        ImageView imageView = new ImageView(image);
+        imageView.setFitHeight(79);
+        imageView.setFitWidth(79);
         return imageView;
     }
 

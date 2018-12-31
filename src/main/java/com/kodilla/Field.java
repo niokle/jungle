@@ -5,8 +5,7 @@ import javafx.scene.image.ImageView;
 
 public class Field {
     private Type type;
-    private Image image;
-    private ImageView imageView;
+    private String imagePath;
 
     public enum Type {
         LAKE, TRAP, GRASS, HOME_WHITE, HOME_BLACK;
@@ -14,10 +13,7 @@ public class Field {
 
     public Field(Type type, String imagePath) {
         this.type = type;
-        image = new Image(imagePath);
-        imageView = new ImageView(image);
-        imageView.setFitHeight(79);
-        imageView.setFitWidth(79);
+        this.imagePath = imagePath;
     }
 
     public Type getType() {
@@ -25,6 +21,10 @@ public class Field {
     }
 
     public ImageView getImageView() {
+        Image image = new Image(imagePath);
+        ImageView imageView = new ImageView(image);
+        imageView.setFitHeight(79);
+        imageView.setFitWidth(79);
         return imageView;
     }
 }
