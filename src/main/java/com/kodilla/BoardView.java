@@ -1,5 +1,7 @@
 package com.kodilla;
 
+import java.util.ArrayList;
+
 public class BoardView {
     private static final int boardNumberOfColumns = 6;
     private static final int boardNumberOfRows = 8;
@@ -88,5 +90,17 @@ public class BoardView {
             }
         }
         return pawn;
+    }
+
+    public ArrayList<Pawn> getAllPawns() {
+        ArrayList<Pawn> pawnsList = new ArrayList<>();
+        for (int c = 0; c <= boardNumberOfColumns; c++) {
+            for (int r = 0; r <= boardNumberOfRows; r++) {
+                if (this.pawn[c][r] != null) {
+                    pawnsList.add(this.pawn[c][r]);
+                }
+            }
+        }
+        return pawnsList;
     }
 }

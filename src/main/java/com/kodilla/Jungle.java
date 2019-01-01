@@ -297,6 +297,5 @@ public class Jungle extends Application {
         primaryStage.setTitle("Jungle chess");
         primaryStage.setScene(scene);
         primaryStage.show();
-
     }
 }

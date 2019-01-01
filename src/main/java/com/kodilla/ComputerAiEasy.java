@@ -28,7 +28,7 @@ public class ComputerAiEasy {
     }
 
     public Pawn getPawn(){
-        int pawnsListIndex = 0;
+        int pawnsListIndex;
         pawnMoves = new PawnMoves(boardView);
         pawnsList.clear();
         for (int column = 0; column <= boardNumberOfColumns; column++) {

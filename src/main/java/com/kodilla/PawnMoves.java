@@ -12,6 +12,7 @@ public class PawnMoves {
     }
 
     public ArrayList<Coordinates> getMoves(Pawn pawn, int column, int row, boolean whiteOnTop) {
+        coordinatesList.clear();
         Coordinates moveLeft = new Coordinates(column, row - 1, "moveLeft");
         Coordinates moveRight = new Coordinates(column, row + 1, "moveRight");
         Coordinates moveUp = new Coordinates(column - 1, row, "moveUp");

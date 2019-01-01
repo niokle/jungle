@@ -16,13 +16,13 @@ public class ComputerMove {
                 break;
             case MEDIUM:
                 ComputerAiMedium computerAiMedium = new ComputerAiMedium(color, boardView, whiteOnTop);
-                pawn = computerAiMedium.getPawn();
-                coordinates = computerAiMedium.getCoordinates(pawn);
+                pawn = computerAiMedium.getComputerPawnCoordinateDistance().getPawn();
+                coordinates = computerAiMedium.getComputerPawnCoordinateDistance().getCoordinates();
                 break;
             case HARD:
                 ComputerAiHard computerAiHard = new ComputerAiHard(color, boardView, whiteOnTop);
-                pawn = computerAiHard.getPawn();
-                coordinates = computerAiHard.getCoordinates(pawn);
+                pawn = computerAiHard.getComputerPawnCoordinateDistance().getPawn();
+                coordinates = computerAiHard.getComputerPawnCoordinateDistance().getCoordinates();
                 break;
         }
         rulesWin = rules.runRules(pawn, coordinates.getColumn(), coordinates.getRow(), board, boardView);
