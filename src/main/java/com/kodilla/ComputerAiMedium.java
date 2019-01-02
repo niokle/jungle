@@ -13,8 +13,11 @@ public class ComputerAiMedium {
         computerAvailablePawnsCoordinates = new ComputerAvailablePawnsCoordinates(color, boardView, whiteOnTop);
     }
 
-    public ComputerPawnCoordinateDistance getComputerPawnCoordinateDistance() {
-        computerAvailablePawnsCoordinates.fillComputerPawnCoordinateDistanceList();
+    public ComputerPawnCoordinateDistance selectComputerPawnCoordinateDistance() {
         return computerAvailablePawnsCoordinates.getComputerPawnCoordinateDistanceList().get(0);
+    }
+
+    public ComputerPawnCoordinateDistance getComputerPawnCoordinateDistance() {
+        return selectComputerPawnCoordinateDistance();
     }
 }

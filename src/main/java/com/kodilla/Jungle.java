@@ -46,6 +46,7 @@ public class Jungle extends Application {
 
     public void newGame() {
         endOfGame = false;
+        playerOneMove = true;
         boardView.resetPositions();
         drawPawns();
         setupTexts();

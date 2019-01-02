@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class PawnMoves {
     private Board board = new Board();
-    private ArrayList<Coordinates> coordinatesList = new ArrayList<>();
     private BoardView boardView;
 
     public PawnMoves(BoardView boardView) {
@@ -12,7 +11,7 @@ public class PawnMoves {
     }
 
     public ArrayList<Coordinates> getMoves(Pawn pawn, int column, int row, boolean whiteOnTop) {
-        coordinatesList.clear();
+        ArrayList<Coordinates> coordinatesList = new ArrayList<>();
         Coordinates moveLeft = new Coordinates(column, row - 1, "moveLeft");
         Coordinates moveRight = new Coordinates(column, row + 1, "moveRight");
         Coordinates moveUp = new Coordinates(column - 1, row, "moveUp");

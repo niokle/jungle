@@ -11,8 +11,9 @@ public class ComputerMove {
         switch (level) {
             case EASY:
                 ComputerAiEasy computerAiEasy = new ComputerAiEasy(color, boardView, whiteOnTop);
-                pawn = computerAiEasy.getPawn();
-                coordinates = computerAiEasy.getCoordinates(pawn);
+                ComputerPawnCoordinateDistance computerPawnCoordinateDistance = computerAiEasy.getComputerPawnCoordinateDistance();
+                pawn = computerPawnCoordinateDistance.getPawn();
+                coordinates = computerPawnCoordinateDistance.getCoordinates();
                 break;
             case MEDIUM:
                 ComputerAiMedium computerAiMedium = new ComputerAiMedium(color, boardView, whiteOnTop);

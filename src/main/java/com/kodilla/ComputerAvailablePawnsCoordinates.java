@@ -63,4 +63,15 @@ public class ComputerAvailablePawnsCoordinates {
     public ArrayList<ComputerPawnCoordinateDistance> getComputerPawnCoordinateDistanceList() {
         return computerPawnCoordinateDistanceList;
     }
+
+    public ArrayList<ComputerPawnCoordinateDistance> getComputerPawnCoordinateDistanceListByPawn(Pawn pawn) {
+        ArrayList<ComputerPawnCoordinateDistance> result = new ArrayList<>();
+        for (ComputerPawnCoordinateDistance c : computerPawnCoordinateDistanceList) {
+            if (c.getPawn() == pawn) {
+                result.add(c);
+            }
+        }
+        return result;
+    }
+
 }
