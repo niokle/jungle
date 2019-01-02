@@ -28,6 +28,7 @@ public class ComputerAvailablePawnsCoordinates {
         boolean beatingPossibility = false;
         boolean possibilityToBeBeatAfterMove;
         boolean possibilityToBeBeatIfDoNotMove;
+        ComputerPawnCoordinateDistance computerPawnCoordinateDistance;
         for (Pawn p : boardView.getAllPawns()) {
             if (p.getColour() == color && p.getActive() == true) {
                 possibilityToBeBeatIfDoNotMove = isPossibilityToBeBeat(p, boardView.getPawnCoordinates(p).getColumn(), boardView.getPawnCoordinates(p).getRow());
@@ -39,7 +40,8 @@ public class ComputerAvailablePawnsCoordinates {
                             beatingPossibility = true;
                         }
                     }
-                    computerPawnCoordinateDistanceList.add(new ComputerPawnCoordinateDistance(p, c, distanceToWinField, beatingPossibility, possibilityToBeBeatIfDoNotMove, possibilityToBeBeatAfterMove));
+                    computerPawnCoordinateDistance = new ComputerPawnCoordinateDistance(p, c, distanceToWinField, beatingPossibility, possibilityToBeBeatIfDoNotMove, possibilityToBeBeatAfterMove);
+                    computerPawnCoordinateDistanceList.add(computerPawnCoordinateDistance);
                 }
             }
         }
