@@ -9,11 +9,11 @@ import javafx.scene.text.Font;
 
 public class BackgroundAndGrid {
     private GridPane grid = new GridPane();
-    private Font font = new Font("Arial", 12);
+    private Font font = new Font("Arial", 14);
     private Color color = Color.rgb(0,0,0);
-    private CheckBox checkBoxTop = new CheckBox();
+    private Label labelTop = new Label();
     private Label labelWhoseMove = new Label();
-    private CheckBox checkBoxBot = new CheckBox();
+    private Label labelBot = new Label();
     private Button buttonNewGame = new Button();
     private Board board = new Board();
     private static final int gridNumberOfColumns = 10;
@@ -44,39 +44,37 @@ public class BackgroundAndGrid {
             }
         }
 
-        checkBoxTop.setFont(font);
-        checkBoxTop.setTextFill(color);
+        labelTop.setFont(font);
+        labelTop.setTextFill(color);
         labelWhoseMove.setFont(font);
         labelWhoseMove.setTextFill(color);
-        checkBoxBot.setFont(font);
-        checkBoxBot.setTextFill(color);
-        grid.add(checkBoxTop, 8, 1, 10, 1);
+        labelBot.setFont(font);
+        labelBot.setTextFill(color);
+        grid.add(labelTop, 8, 1, 10, 1);
         grid.add(choiceBoxTop, 8, 1, 10, 2);
         grid.add(labelWhoseMove,8,3, 10,3);
-        grid.add(checkBoxBot, 8, 5, 10, 5);
+        grid.add(labelBot, 8, 5, 10, 5);
         grid.add(choiceBoxBot, 8, 5, 10, 6);
-        //choiceBoxTop.setVisible(false);
-        //choiceBoxBot.setVisible(false);
         buttonNewGame.setFont(font);
         buttonNewGame.setTextFill(color);
         buttonNewGame.setText("Nowa gra");
-        grid.add(buttonNewGame,8, 4, 8,4);
+        grid.add(buttonNewGame,8, 3, 8,4);
     }
 
     public GridPane getGrid() {
         return grid;
     }
 
-    public CheckBox getCheckBoxTop() {
-        return checkBoxTop;
+    public Label getLabelTop() {
+        return labelTop;
     }
 
     public Label getLabelWhoseMove() {
         return labelWhoseMove;
     }
 
-    public CheckBox getCheckBoxBot() {
-        return checkBoxBot;
+    public Label getLabelBot() {
+        return labelBot;
     }
 
     public Button getButtonNewGame() {

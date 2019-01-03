@@ -36,7 +36,7 @@ public class Jungle extends Application {
     private Win win = new Win(whitePlayerOne, backgroundAndGrid);
 
     public enum Level {
-        EASY, MEDIUM, HARD;
+        HUMAN, EASY, MEDIUM, HARD;
     }
 
     public static void main(String[] args) {
@@ -139,30 +139,17 @@ public class Jungle extends Application {
     }
 
     public void setupTexts() {
-        String top = null;
-        String bot = null;
-        if (backgroundAndGrid.getCheckBoxTop().isSelected()) {
-            top = ": komputer";
-        } else {
-            top = ": człowiek";
-        }
-        if (backgroundAndGrid.getCheckBoxBot().isSelected()) {
-            bot = ": komputer";
-        } else {
-            bot = ": człowiek";
-        }
-
         if (whitePlayerOne && whiteOnTop || !whitePlayerOne && !whiteOnTop) {
-            backgroundAndGrid.getCheckBoxTop().setText("Gracz 1" + top);
-            backgroundAndGrid.getCheckBoxBot().setText("Gracz 2" + bot);
+            backgroundAndGrid.getLabelTop().setText("PLAYER 1");
+            backgroundAndGrid.getLabelBot().setText("PLAYER 2");
         } else {
-            backgroundAndGrid.getCheckBoxTop().setText("Gracz 2" + top);
-            backgroundAndGrid.getCheckBoxBot().setText("Gracz 1" + bot);
+            backgroundAndGrid.getLabelTop().setText("PLAYER 2");
+            backgroundAndGrid.getLabelBot().setText("PLAYER 1");
         }
         if (playerOneMove) {
-            backgroundAndGrid.getLabelWhoseMove().setText("Ruch gracza 1");
+            backgroundAndGrid.getLabelWhoseMove().setText("PLAYER 1 MOVE");
         } else {
-            backgroundAndGrid.getLabelWhoseMove().setText("Ruch gracza 2");
+            backgroundAndGrid.getLabelWhoseMove().setText("PLAYER 2 MOVE");
         }
     }
 
@@ -201,59 +188,29 @@ public class Jungle extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        fillLevels();
         setupTexts();
-
         drawPawns();
 
         backgroundAndGrid.getButtonNewGame().setOnAction((event) -> {
             newGame();
         });
 
-        backgroundAndGrid.getCheckBoxTop().setOnAction((event) -> {
-            if (backgroundAndGrid.getCheckBoxTop().isSelected()) {
-                if (whitePlayerOne && whiteOnTop || !whitePlayerOne && !whiteOnTop) {
-                    computerPlayerOne = true;
-                } else {
-                    computerPlayerTwo = true;
-                }
-                fillLevels();
-                backgroundAndGrid.getChoiceBoxTop().setVisible(true);
-            } else {
-                if (whitePlayerOne && whiteOnTop || !whitePlayerOne && !whiteOnTop) {
-                    computerPlayerOne = false;
-                } else {
-                    computerPlayerTwo = false;
-                }
-                backgroundAndGrid.getChoiceBoxTop().setVisible(false);
-            }
-            setupTexts();
-        });
-
-        backgroundAndGrid.getCheckBoxBot().setOnAction((event) -> {
-            if (backgroundAndGrid.getCheckBoxBot().isSelected()) {
-                if (whitePlayerOne && whiteOnTop || !whitePlayerOne && !whiteOnTop) {
-                    computerPlayerTwo = true;
-                } else {
-                    computerPlayerOne = true;
-                }
-                fillLevels();
-                backgroundAndGrid.getChoiceBoxBot().setVisible(true);
-            } else {
-                if (whitePlayerOne && whiteOnTop || !whitePlayerOne && !whiteOnTop) {
-                    computerPlayerTwo = false;
-                } else {
-                    computerPlayerOne = false;
-                }
-                backgroundAndGrid.getChoiceBoxBot().setVisible(false);
-            }
-            setupTexts();
-        });
-
         backgroundAndGrid.getChoiceBoxTop().setOnAction((event) -> {
+            if (backgroundAndGrid.getChoiceBoxTop().getValue() == Level.HUMAN) {
+                computerPlayerOne = false;
+            } else {
+                computerPlayerOne = true;
+            }
             computerPlayerOneLevel = backgroundAndGrid.getChoiceBoxTop().getValue();
         });
 
         backgroundAndGrid.getChoiceBoxBot().setOnAction((event) -> {
+            if (backgroundAndGrid.getChoiceBoxBot().getValue() == Level.HUMAN) {
+                computerPlayerTwo = false;
+            } else {
+                computerPlayerTwo = true;
+            }
             computerPlayerTwoLevel = backgroundAndGrid.getChoiceBoxBot().getValue();
         });
 

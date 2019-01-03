@@ -13,10 +13,10 @@ public class Win {
 
     public void checkWin(Rules.Win win) {
         if (win == Rules.Win.WHITE && whitePlayerOne || win == Rules.Win.BLACK && !whitePlayerOne) {
-            backgroundAndGrid.getLabelWhoseMove().setText("Gracz 1 WYGRAŁ!");
+            backgroundAndGrid.getLabelWhoseMove().setText("PLAYER 1 WIN!");
             endOfGame = true;
         } else if (win == Rules.Win.BLACK && whitePlayerOne || win == Rules.Win.WHITE && !whitePlayerOne) {
-            backgroundAndGrid.getLabelWhoseMove().setText("Gracz 2 WYGRAŁ!");
+            backgroundAndGrid.getLabelWhoseMove().setText("PLAYER 2 WIN!");
             endOfGame = true;
         }
     }
