@@ -21,8 +21,8 @@ public class ComputerAiEasyTestSuite {
                p.setActive(false);
            }
         }
-        pawn = computerAiEasy.getPawn();
-        coordinates = computerAiEasy.getCoordinates(pawn);
+        pawn = computerAiEasy.getComputerPawnCoordinateDistance().getPawn();
+        coordinates = computerAiEasy.getComputerPawnCoordinateDistance().getCoordinates();
 
         //Then
         Assert.assertEquals(Pawn.Name.ELEPHANT, pawn.getName());

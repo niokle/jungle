@@ -251,7 +251,6 @@ public class Jungle extends Application {
         });
 
         Scene scene = new Scene(backgroundAndGrid.getGrid(), 1600, 900, Color.web("#CCFFCC"));
-
         primaryStage.setTitle("Jungle chess");
         primaryStage.setScene(scene);
         primaryStage.show();

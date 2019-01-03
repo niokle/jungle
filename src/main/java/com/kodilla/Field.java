@@ -21,10 +21,7 @@ public class Field {
     }
 
     public ImageView getImageView() {
-        Image image = new Image(imagePath);
-        ImageView imageView = new ImageView(image);
-        imageView.setFitHeight(79);
-        imageView.setFitWidth(79);
-        return imageView;
+        MyImageView myImageView = new MyImageView(imagePath);
+        return myImageView.getImageView();
     }
 }
