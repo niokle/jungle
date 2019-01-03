@@ -30,7 +30,7 @@ public class ComputerAvailablePawnsCoordinates {
         boolean possibilityToBeBeatIfDoNotMove;
         ComputerPawnCoordinateDistance computerPawnCoordinateDistance;
         for (Pawn p : boardView.getAllPawns()) {
-            if (p.getColour() == color && p.getActive() == true) {
+            if (p.getColour() == color && p.getActive()) {
                 possibilityToBeBeatIfDoNotMove = isPossibilityToBeBeat(p, boardView.getPawnCoordinates(p).getColumn(), boardView.getPawnCoordinates(p).getRow());
                 for (Coordinates c : pawnMoves.getMoves(p, boardView.getPawnCoordinates(p).getColumn(), boardView.getPawnCoordinates(p).getRow(), whiteOnTop)) {
                     distanceToWinField = Math.sqrt(Math.pow((coordinatesWinField.getColumn() - c.getColumn()), 2) + Math.pow((coordinatesWinField.getRow() - c.getRow()), 2));

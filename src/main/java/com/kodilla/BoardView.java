@@ -3,11 +3,10 @@ package com.kodilla;
 import java.util.ArrayList;
 
 public class BoardView {
-    private static final int boardNumberOfColumns = 6;
-    private static final int boardNumberOfRows = 8;
+    private static final int BOARD_NUMBER_OF_COLUMNS = 6;
+    private static final int BOARD_NUMBER_OF_ROWS = 8;
     private boolean whiteOnTop;
     private Pawn[][] pawn = new Pawn[7][9];
-    private Board board = new Board();
 
     public BoardView(boolean whiteOnTop) {
         this.whiteOnTop = whiteOnTop;
@@ -25,8 +24,8 @@ public class BoardView {
             colourOnBot = 'W';
         }
 
-        for (int column = 0; column <= boardNumberOfColumns; column++) {
-            for (int row = 0; row <= boardNumberOfRows; row++) {
+        for (int column = 0; column <= BOARD_NUMBER_OF_COLUMNS; column++) {
+            for (int row = 0; row <= BOARD_NUMBER_OF_ROWS; row++) {
                 pawn[column][row] = null;
             }
         }
@@ -54,8 +53,8 @@ public class BoardView {
     }
 
     public void setPawnPosition(Pawn pawn, int column, int row) {
-        for (int c = 0; c <= boardNumberOfColumns; c++) {
-            for (int r = 0; r <= boardNumberOfRows; r++) {
+        for (int c = 0; c <= BOARD_NUMBER_OF_COLUMNS; c++) {
+            for (int r = 0; r <= BOARD_NUMBER_OF_ROWS; r++) {
                 if (this.pawn[c][r] == pawn) {
                     this.pawn[c][r] = null;
                     this.pawn[column][row] = pawn;
@@ -67,8 +66,8 @@ public class BoardView {
     public Coordinates getPawnCoordinates(Pawn pawn) {
         int column = 0;
         int row = 0;
-        for (int c = 0; c <= boardNumberOfColumns; c++) {
-            for (int r = 0; r <= boardNumberOfRows; r++) {
+        for (int c = 0; c <= BOARD_NUMBER_OF_COLUMNS; c++) {
+            for (int r = 0; r <= BOARD_NUMBER_OF_ROWS; r++) {
                 if (this.pawn[c][r] == pawn) {
                     column = c;
                     row = r;
@@ -80,8 +79,8 @@ public class BoardView {
 
     public Pawn getPawnByNameColor(Pawn.Name name, char color) {
         Pawn pawn = null;
-        for (int c = 0; c <= boardNumberOfColumns; c++) {
-            for (int r = 0; r <= boardNumberOfRows; r++) {
+        for (int c = 0; c <= BOARD_NUMBER_OF_COLUMNS; c++) {
+            for (int r = 0; r <= BOARD_NUMBER_OF_ROWS; r++) {
                 if (this.pawn[c][r] != null) {
                     if (this.pawn[c][r].getName() == name && this.pawn[c][r].getColour() == color) {
                         pawn = this.pawn[c][r];
@@ -94,8 +93,8 @@ public class BoardView {
 
     public ArrayList<Pawn> getAllPawns() {
         ArrayList<Pawn> pawnsList = new ArrayList<>();
-        for (int c = 0; c <= boardNumberOfColumns; c++) {
-            for (int r = 0; r <= boardNumberOfRows; r++) {
+        for (int c = 0; c <= BOARD_NUMBER_OF_COLUMNS; c++) {
+            for (int r = 0; r <= BOARD_NUMBER_OF_ROWS; r++) {
                 if (this.pawn[c][r] != null) {
                     pawnsList.add(this.pawn[c][r]);
                 }

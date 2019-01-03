@@ -16,19 +16,19 @@ public class BackgroundAndGrid {
     private Label labelBot = new Label();
     private Button buttonNewGame = new Button();
     private Board board = new Board();
-    private static final int gridNumberOfColumns = 10;
-    private static final int gridNumberOfRows = 8;
-    private static final int boardNumberOfColumns = 6;
-    private static final int boardNumberOfRows = 8;
+    private static final int GRID_NUMBER_OF_COLUMNS = 10;
+    private static final int GRID_NUMBER_OF_ROWS = 8;
+    private static final int BOARD_NUMBER_OF_COLUMNS = 6;
+    private static final int BOARD_NUMBER_OF_ROWS = 8;
     private ChoiceBox<Jungle.Level> choiceBoxTop = new ChoiceBox<>();
     private ChoiceBox<Jungle.Level> choiceBoxBot = new ChoiceBox<>();
 
     public BackgroundAndGrid() {
         grid.setAlignment(Pos.TOP_CENTER);
         grid.setPadding(new Insets(0, 0, 0, 316));
-        for (int column = 0; column <= gridNumberOfColumns; column++) {
+        for (int column = 0; column <= GRID_NUMBER_OF_COLUMNS; column++) {
             grid.getColumnConstraints().add(new ColumnConstraints(79));
-            for (int row = 0; row <= gridNumberOfRows; row++) {
+            for (int row = 0; row <= GRID_NUMBER_OF_ROWS; row++) {
                 grid.getRowConstraints().add(new RowConstraints(79));
             }
         }
@@ -38,8 +38,8 @@ public class BackgroundAndGrid {
     }
 
     public void addConstantNodes() {
-        for (int column = 0; column <= boardNumberOfColumns; column++) {
-            for (int row = 0; row <= boardNumberOfRows; row++) {
+        for (int column = 0; column <= BOARD_NUMBER_OF_COLUMNS; column++) {
+            for (int row = 0; row <= BOARD_NUMBER_OF_ROWS; row++) {
                 grid.add(board.getField(column, row).getImageView(), column, row);
             }
         }
