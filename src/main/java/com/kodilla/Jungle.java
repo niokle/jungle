@@ -13,8 +13,6 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 
 public class Jungle extends Application {
-    private static final int BOARD_NUMBER_OF_COLUMNS = 6;
-    private static final int BOARD_NUMBER_OF_ROWS = 8;
     private BackgroundAndGrid backgroundAndGrid = new BackgroundAndGrid();
     private boolean whiteOnTop = true;
     private boolean whitePlayerOne = true;
@@ -34,6 +32,7 @@ public class Jungle extends Application {
     private Rules rules = new Rules();
     private ComputerMove computerMove = new ComputerMove();
     private Win win = new Win(whitePlayerOne, backgroundAndGrid);
+    private BoardLoop boardLoop = new BoardLoop();
 
     public enum Level {
         HUMAN, EASY, MEDIUM, HARD;
@@ -60,13 +59,22 @@ public class Jungle extends Application {
     public void drawPawns() {
         backgroundAndGrid.getGrid().getChildren().clear();
         backgroundAndGrid.addConstantNodes();
-        for (int column = 0; column <= BOARD_NUMBER_OF_COLUMNS; column++) {
-            for (int row = 0; row <= BOARD_NUMBER_OF_ROWS; row++) {
-                if (boardView.getPawn(column, row) != null && boardView.getPawn(column, row).getActive()) {
-                    backgroundAndGrid.getGrid().add(boardView.getPawn(column, row).getImageView(), column, row);
+        boardLoop.runBoardLoop(new BoardLoopBody() {
+            @Override
+            public void boardLoopBodyDef(int columnBoardLoop, int rowBoardLoop) {
+                if (boardView.getPawn(columnBoardLoop, rowBoardLoop) != null && boardView.getPawn(columnBoardLoop, rowBoardLoop).getActive()) {
+                    backgroundAndGrid.getGrid().add(boardView.getPawn(columnBoardLoop, rowBoardLoop).getImageView(), columnBoardLoop, rowBoardLoop);
                 }
             }
-        }
+        });
+
+        //for (int column = 0; column <= BOARD_NUMBER_OF_COLUMNS; column++) {
+        //    for (int row = 0; row <= BOARD_NUMBER_OF_ROWS; row++) {
+        //        if (boardView.getPawn(column, row) != null && boardView.getPawn(column, row).getActive()) {
+        //            backgroundAndGrid.getGrid().add(boardView.getPawn(column, row).getImageView(), column, row);
+        //        }
+        //    }
+        //}
     }
 
     public boolean checkIfVisiblePlayerMove(int column, int row) {

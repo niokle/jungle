@@ -33,7 +33,7 @@ public class ComputerAvailablePawnsCoordinates {
             if (p.getColour() == color && p.getActive()) {
                 possibilityToBeBeatIfDoNotMove = isPossibilityToBeBeat(p, boardView.getPawnCoordinates(p).getColumn(), boardView.getPawnCoordinates(p).getRow());
                 for (Coordinates c : pawnMoves.getMoves(p, boardView.getPawnCoordinates(p).getColumn(), boardView.getPawnCoordinates(p).getRow(), whiteOnTop)) {
-                    distanceToWinField = Math.sqrt(Math.pow((coordinatesWinField.getColumn() - c.getColumn()), 2) + Math.pow((coordinatesWinField.getRow() - c.getRow()), 2));
+                    distanceToWinField = getDistanceToWinField(c);
                     possibilityToBeBeatAfterMove = isPossibilityToBeBeat(p, c.getColumn(), c.getRow());
                     if (boardView.getPawn(c.getColumn(), c.getRow()) != null) {
                         if (boardView.getPawn(c.getColumn(), c.getRow()).getColour() != color && boardView.getPawn(c.getColumn(), c.getRow()).getCurrentStrength() <= p.getCurrentStrength() && boardView.getPawn(c.getColumn(), c.getRow()).getActive()) {
@@ -45,6 +45,10 @@ public class ComputerAvailablePawnsCoordinates {
                 }
             }
         }
+    }
+
+    private double getDistanceToWinField(Coordinates c) {
+        return Math.sqrt(Math.pow((coordinatesWinField.getColumn() - c.getColumn()), 2) + Math.pow((coordinatesWinField.getRow() - c.getRow()), 2));
     }
 
     public boolean isPossibilityToBeBeat(Pawn pawn, int column, int row) {
@@ -73,5 +77,4 @@ public class ComputerAvailablePawnsCoordinates {
         }
         return result;
     }
-
 }

@@ -1,8 +1,6 @@
 package com.kodilla;
 
 public class Board {
-    private static final int BOARD_NUMBER_OF_COLUMNS = 6;
-    private static final int BOARD_NUMBER_OF_ROWS = 8;
     private Field[][] field = new Field[7][9];
     private Field homeWhite = new Field(Field.Type.HOME_WHITE, "file:src/main/resources/homeW.png");
     private Field homeBlack = new Field(Field.Type.HOME_BLACK, "file:src/main/resources/homeB.png");
@@ -29,13 +27,15 @@ public class Board {
         field[3][0] = homeWhite;
         field[3][8] = homeBlack;
 
-        for (int column = 0; column <= BOARD_NUMBER_OF_COLUMNS; column++) {
-            for (int row = 0; row <= BOARD_NUMBER_OF_ROWS; row++) {
-                if (field[column][row] == null) {
-                    field[column][row] = new Field(Field.Type.GRASS, "file:src/main/resources/grass.png");
+        BoardLoop boardLoop = new BoardLoop();
+        boardLoop.runBoardLoop(new BoardLoopBody() {
+            @Override
+            public void boardLoopBodyDef(int columnBoardLoop, int rowBoardLoop) {
+                if (field[columnBoardLoop][rowBoardLoop] == null) {
+                    field[columnBoardLoop][rowBoardLoop] = new Field(Field.Type.GRASS, "file:src/main/resources/grass.png");
                 }
             }
-        }
+        });
     }
 
     public Field getField(int column, int row) {

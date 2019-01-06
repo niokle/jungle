@@ -3,10 +3,9 @@ package com.kodilla;
 import java.util.ArrayList;
 
 public class BoardView {
-    private static final int BOARD_NUMBER_OF_COLUMNS = 6;
-    private static final int BOARD_NUMBER_OF_ROWS = 8;
     private boolean whiteOnTop;
     private Pawn[][] pawn = new Pawn[7][9];
+    BoardLoop boardLoop = new BoardLoop();
 
     public BoardView(boolean whiteOnTop) {
         this.whiteOnTop = whiteOnTop;
@@ -24,11 +23,12 @@ public class BoardView {
             colourOnBot = 'W';
         }
 
-        for (int column = 0; column <= BOARD_NUMBER_OF_COLUMNS; column++) {
-            for (int row = 0; row <= BOARD_NUMBER_OF_ROWS; row++) {
-                pawn[column][row] = null;
+        boardLoop.runBoardLoop(new BoardLoopBody() {
+            @Override
+            public void boardLoopBodyDef(int columnBoardLoop, int rowBoardLoop) {
+                pawn[columnBoardLoop][rowBoardLoop] = null;
             }
-        }
+        });
 
         pawn[0][0] = new Pawn(Pawn.Name.LION, colourOnTop, 7, "file:src/main/resources/pawns/lion" + colourOnTop + ".png", true);
         pawn[6][0] = new Pawn(Pawn.Name.TIGER, colourOnTop, 6, "file:src/main/resources/pawns/tiger" + colourOnTop + ".png", true);
@@ -53,53 +53,46 @@ public class BoardView {
     }
 
     public void setPawnPosition(Pawn pawn, int column, int row) {
-        for (int c = 0; c <= BOARD_NUMBER_OF_COLUMNS; c++) {
-            for (int r = 0; r <= BOARD_NUMBER_OF_ROWS; r++) {
-                if (this.pawn[c][r] == pawn) {
-                    this.pawn[c][r] = null;
-                    this.pawn[column][row] = pawn;
+        Pawn thisPawn[][] = this.pawn;
+        boardLoop.runBoardLoop(new BoardLoopBody() {
+            @Override
+            public void boardLoopBodyDef(int columnBoardLoop, int rowBoardLoop) {
+                if (thisPawn[columnBoardLoop][rowBoardLoop] == pawn) {
+                    thisPawn[columnBoardLoop][rowBoardLoop] = null;
+                    thisPawn[column][row] = pawn;
                 }
             }
-        }
+        });
     }
 
     public Coordinates getPawnCoordinates(Pawn pawn) {
-        int column = 0;
-        int row = 0;
-        for (int c = 0; c <= BOARD_NUMBER_OF_COLUMNS; c++) {
-            for (int r = 0; r <= BOARD_NUMBER_OF_ROWS; r++) {
-                if (this.pawn[c][r] == pawn) {
-                    column = c;
-                    row = r;
+        final int[] column = new int[1];
+        final int[] row = new int[1];
+        Pawn thisPawn[][] = this.pawn;
+        boardLoop.runBoardLoop(new BoardLoopBody() {
+            @Override
+            public void boardLoopBodyDef(int columnBoardLoop, int rowBoardLoop) {
+                if (thisPawn[columnBoardLoop][rowBoardLoop] == pawn) {
+                    column[0] = columnBoardLoop;
+                    row[0] = rowBoardLoop;
                 }
             }
-        }
-        return new Coordinates(column, row, "");
+        });
+        return new Coordinates(column[0], row[0], "");
     }
 
-    public Pawn getPawnByNameColor(Pawn.Name name, char color) {
-        Pawn pawn = null;
-        for (int c = 0; c <= BOARD_NUMBER_OF_COLUMNS; c++) {
-            for (int r = 0; r <= BOARD_NUMBER_OF_ROWS; r++) {
-                if (this.pawn[c][r] != null) {
-                    if (this.pawn[c][r].getName() == name && this.pawn[c][r].getColour() == color) {
-                        pawn = this.pawn[c][r];
-                    }
-                }
-            }
-        }
-        return pawn;
-    }
 
     public ArrayList<Pawn> getAllPawns() {
         ArrayList<Pawn> pawnsList = new ArrayList<>();
-        for (int c = 0; c <= BOARD_NUMBER_OF_COLUMNS; c++) {
-            for (int r = 0; r <= BOARD_NUMBER_OF_ROWS; r++) {
-                if (this.pawn[c][r] != null) {
-                    pawnsList.add(this.pawn[c][r]);
+        Pawn thisPawn[][] = this.pawn;
+        boardLoop.runBoardLoop(new BoardLoopBody() {
+            @Override
+            public void boardLoopBodyDef(int columnBoardLoop, int rowBoardLoop) {
+                if (thisPawn[columnBoardLoop][rowBoardLoop] != null) {
+                    pawnsList.add(thisPawn[columnBoardLoop][rowBoardLoop]);
                 }
             }
-        }
+        });
         return pawnsList;
     }
 }

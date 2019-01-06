@@ -18,8 +18,6 @@ public class BackgroundAndGrid {
     private Board board = new Board();
     private static final int GRID_NUMBER_OF_COLUMNS = 10;
     private static final int GRID_NUMBER_OF_ROWS = 8;
-    private static final int BOARD_NUMBER_OF_COLUMNS = 6;
-    private static final int BOARD_NUMBER_OF_ROWS = 8;
     private ChoiceBox<Jungle.Level> choiceBoxTop = new ChoiceBox<>();
     private ChoiceBox<Jungle.Level> choiceBoxBot = new ChoiceBox<>();
 
@@ -38,11 +36,13 @@ public class BackgroundAndGrid {
     }
 
     public void addConstantNodes() {
-        for (int column = 0; column <= BOARD_NUMBER_OF_COLUMNS; column++) {
-            for (int row = 0; row <= BOARD_NUMBER_OF_ROWS; row++) {
-                grid.add(board.getField(column, row).getImageView(), column, row);
+        BoardLoop boardLoop = new BoardLoop();
+        boardLoop.runBoardLoop(new BoardLoopBody() {
+            @Override
+            public void boardLoopBodyDef(int columnBoardLoop, int rowBoardLoop) {
+                grid.add(board.getField(columnBoardLoop, rowBoardLoop).getImageView(), columnBoardLoop, rowBoardLoop);
             }
-        }
+        });
 
         labelTop.setFont(font);
         labelTop.setTextFill(color);
