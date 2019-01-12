@@ -2,11 +2,9 @@ package com.kodilla;
 
 import javafx.application.Application;
 import javafx.collections.FXCollections;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -35,7 +33,7 @@ public class Jungle extends Application {
     private BoardLoop boardLoop = new BoardLoop();
 
     public enum Level {
-        HUMAN, EASY, MEDIUM, HARD;
+        HUMAN, EASY, MEDIUM, HARD
     }
 
     public static void main(String[] args) {
@@ -59,22 +57,11 @@ public class Jungle extends Application {
     public void drawPawns() {
         backgroundAndGrid.getGrid().getChildren().clear();
         backgroundAndGrid.addConstantNodes();
-        boardLoop.runBoardLoop(new BoardLoopBody() {
-            @Override
-            public void boardLoopBodyDef(int columnBoardLoop, int rowBoardLoop) {
-                if (boardView.getPawn(columnBoardLoop, rowBoardLoop) != null && boardView.getPawn(columnBoardLoop, rowBoardLoop).getActive()) {
-                    backgroundAndGrid.getGrid().add(boardView.getPawn(columnBoardLoop, rowBoardLoop).getImageView(), columnBoardLoop, rowBoardLoop);
-                }
+        boardLoop.runBoardLoop((columnBoardLoop, rowBoardLoop) -> {
+            if (boardView.getPawn(columnBoardLoop, rowBoardLoop) != null && boardView.getPawn(columnBoardLoop, rowBoardLoop).getActive()) {
+                backgroundAndGrid.getGrid().add(boardView.getPawn(columnBoardLoop, rowBoardLoop).getImageView(), columnBoardLoop, rowBoardLoop);
             }
         });
-
-        //for (int column = 0; column <= BOARD_NUMBER_OF_COLUMNS; column++) {
-        //    for (int row = 0; row <= BOARD_NUMBER_OF_ROWS; row++) {
-        //        if (boardView.getPawn(column, row) != null && boardView.getPawn(column, row).getActive()) {
-        //            backgroundAndGrid.getGrid().add(boardView.getPawn(column, row).getImageView(), column, row);
-        //        }
-        //    }
-        //}
     }
 
     public boolean checkIfVisiblePlayerMove(int column, int row) {
@@ -222,37 +209,34 @@ public class Jungle extends Application {
             computerPlayerTwoLevel = backgroundAndGrid.getChoiceBoxBot().getValue();
         });
 
-        backgroundAndGrid.getGrid().setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                if (!endOfGame) {
-                    drawPawns();
-                    int column = GridPane.getColumnIndex(event.getPickResult().getIntersectedNode());
-                    int row = GridPane.getRowIndex(event.getPickResult().getIntersectedNode());
-                    Pawn pawn = boardView.getPawn(column, row);
+        backgroundAndGrid.getGrid().setOnMouseClicked(event -> {
+            if (!endOfGame) {
+                drawPawns();
+                int column = GridPane.getColumnIndex(event.getPickResult().getIntersectedNode());
+                int row = GridPane.getRowIndex(event.getPickResult().getIntersectedNode());
+                Pawn pawn = boardView.getPawn(column, row);
 
-                    if (selectedPawn != null) {
-                        if (selectedPawn == pawn) {
+                if (selectedPawn != null) {
+                    if (selectedPawn == pawn) {
+                        selectedPawn = null;
+                        removePossiblePlayerMoves();
+                    } else {
+                        if (checkIfVisiblePlayerMove(column, row)) {
+                            movePawn(selectedPawn, column, row);
                             selectedPawn = null;
-                            removePossiblePlayerMoves();
-                        } else {
-                            if (checkIfVisiblePlayerMove(column, row)) {
-                                movePawn(selectedPawn, column, row);
-                                selectedPawn = null;
-                            }
                         }
-                    } else if (pawn != null) {
-                        char possibleColor;
-                        if (whitePlayerOne && playerOneMove || !whitePlayerOne && !playerOneMove) {
-                            possibleColor = 'W';
-                        } else {
-                            possibleColor = 'B';
-                        }
+                    }
+                } else if (pawn != null) {
+                    char possibleColor;
+                    if (whitePlayerOne && playerOneMove || !whitePlayerOne && !playerOneMove) {
+                        possibleColor = 'W';
+                    } else {
+                        possibleColor = 'B';
+                    }
 
-                        if (pawn.getColour() == possibleColor) {
-                            showPossiblePlayerMoves(pawn, column, row);
-                            selectedPawn = pawn;
-                        }
+                    if (pawn.getColour() == possibleColor) {
+                        showPossiblePlayerMoves(pawn, column, row);
+                        selectedPawn = pawn;
                     }
                 }
             }

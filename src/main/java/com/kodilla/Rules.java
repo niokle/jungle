@@ -2,7 +2,7 @@ package com.kodilla;
 
 public class Rules {
     public enum Win {
-        WHITE, BLACK;
+        WHITE, BLACK
     }
 
     public Win runRules(Pawn pawn, int newColumn, int newRow, Board board, BoardView boardView) {
@@ -45,6 +45,22 @@ public class Rules {
                 result = Win.BLACK;
             }
         }
+        if (!isAnyPawnActive(boardView, 'B')) {
+            result = Win.WHITE;
+        } else if (!isAnyPawnActive(boardView, 'W')) {
+            result = Win.BLACK;
+        }
         return result;
+    }
+
+    public boolean isAnyPawnActive(BoardView boardView, char color) {
+        long numberOfActivePawns = boardView.getAllPawns().stream()
+                .filter(pawn -> pawn.getActive())
+                .filter(pawn -> pawn.getColour() == color)
+                .count();
+        if (numberOfActivePawns > 0) {
+            return true;
+        }
+        return false;
     }
 }

@@ -29,6 +29,7 @@ public class ComputerAvailablePawnsCoordinates {
         boolean possibilityToBeBeatAfterMove;
         boolean possibilityToBeBeatIfDoNotMove;
         ComputerPawnCoordinateDistance computerPawnCoordinateDistance;
+
         for (Pawn p : boardView.getAllPawns()) {
             if (p.getColour() == color && p.getActive()) {
                 possibilityToBeBeatIfDoNotMove = isPossibilityToBeBeat(p, boardView.getPawnCoordinates(p).getColumn(), boardView.getPawnCoordinates(p).getRow());

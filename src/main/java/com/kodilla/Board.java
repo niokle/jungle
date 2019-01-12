@@ -28,12 +28,9 @@ public class Board {
         field[3][8] = homeBlack;
 
         BoardLoop boardLoop = new BoardLoop();
-        boardLoop.runBoardLoop(new BoardLoopBody() {
-            @Override
-            public void boardLoopBodyDef(int columnBoardLoop, int rowBoardLoop) {
-                if (field[columnBoardLoop][rowBoardLoop] == null) {
-                    field[columnBoardLoop][rowBoardLoop] = new Field(Field.Type.GRASS, "file:src/main/resources/grass.png");
-                }
+        boardLoop.runBoardLoop((columnBoardLoop, rowBoardLoop) -> {
+            if (field[columnBoardLoop][rowBoardLoop] == null) {
+                field[columnBoardLoop][rowBoardLoop] = new Field(Field.Type.GRASS, "file:src/main/resources/grass.png");
             }
         });
     }

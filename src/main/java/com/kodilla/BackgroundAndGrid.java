@@ -37,12 +37,7 @@ public class BackgroundAndGrid {
 
     public void addConstantNodes() {
         BoardLoop boardLoop = new BoardLoop();
-        boardLoop.runBoardLoop(new BoardLoopBody() {
-            @Override
-            public void boardLoopBodyDef(int columnBoardLoop, int rowBoardLoop) {
-                grid.add(board.getField(columnBoardLoop, rowBoardLoop).getImageView(), columnBoardLoop, rowBoardLoop);
-            }
-        });
+        boardLoop.runBoardLoop((columnBoardLoop, rowBoardLoop) -> grid.add(board.getField(columnBoardLoop, rowBoardLoop).getImageView(), columnBoardLoop, rowBoardLoop));
 
         labelTop.setFont(font);
         labelTop.setTextFill(color);

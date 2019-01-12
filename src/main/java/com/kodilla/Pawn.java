@@ -9,9 +9,10 @@ public class Pawn {
     private int currentStrength;
     private boolean active;
     private String imagePath;
+    private MyImageView myImageView;
 
     public enum Name {
-        LION, TIGER, DOG, CAT, RAT, PHANTER, WOLF, ELEPHANT;
+        LION, TIGER, DOG, CAT, RAT, PANTHER, WOLF, ELEPHANT
     }
 
     public Pawn(Name name, char color, int strength, String imagePath, boolean active) {
@@ -41,7 +42,9 @@ public class Pawn {
     }
 
     public ImageView getImageView() {
-        MyImageView myImageView = new MyImageView(imagePath);
+        if (myImageView == null) {
+            myImageView = new MyImageView(imagePath);
+        }
         return myImageView.getImageView();
     }
 
