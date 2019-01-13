@@ -77,7 +77,7 @@ public class Jungle extends Application {
     public void showPossiblePlayerMoves(Pawn pawn, int column, int row) {
         removePossiblePlayerMoves();
         coordinates.clear();
-        coordinates = pawnMoves.getMoves(pawn, column, row, whiteOnTop);
+        coordinates = pawnMoves.getMoves(pawn, whiteOnTop);
         for (int j = 0; j < coordinates.size(); j++) {
             imageView[j].setFitHeight(79);
             imageView[j].setFitWidth(79);
@@ -110,7 +110,7 @@ public class Jungle extends Application {
     public void movePawn(Pawn selectedPawn, int column, int row) {
         Coordinates coordinates = new Coordinates(column, row, "");
         Rules.Win rulesWin;
-        for (Coordinates c : pawnMoves.getMoves(selectedPawn, boardView.getPawnCoordinates(selectedPawn).getColumn(), boardView.getPawnCoordinates(selectedPawn).getRow(), whiteOnTop)) {
+        for (Coordinates c : pawnMoves.getMoves(selectedPawn, whiteOnTop)) {
             if (c.getColumn() == coordinates.getColumn() && c.getRow() == coordinates.getRow()) {
                 rulesWin = rules.runRules(selectedPawn, column, row, backgroundAndGrid.getBoard(), boardView);
                 win.checkWin(rulesWin);

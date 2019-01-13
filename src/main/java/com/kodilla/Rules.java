@@ -7,10 +7,10 @@ public class Rules {
 
     public Win runRules(Pawn pawn, int newColumn, int newRow, Board board, BoardView boardView) {
         Win result = null;
-        if (board.getField(newColumn, newRow).getType() == Field.Type.TRAP) {
+        if (isFieldTrap(newColumn, newRow, board)) {
             pawn.setCurrentStrength(0);
         }
-        if (board.getField(boardView.getPawnCoordinates(pawn).getColumn(), boardView.getPawnCoordinates(pawn).getRow()).getType() == Field.Type.TRAP) {
+        if (isFieldTrap(boardView.getPawnCoordinates(pawn).getColumn(), boardView.getPawnCoordinates(pawn).getRow(), board)) {
             pawn.setCurrentStrength(pawn.getStrength());
         }
 
@@ -51,6 +51,10 @@ public class Rules {
             result = Win.BLACK;
         }
         return result;
+    }
+
+    private boolean isFieldTrap(int newColumn, int newRow, Board board) {
+        return board.getField(newColumn, newRow).getType() == Field.Type.TRAP;
     }
 
     public boolean isAnyPawnActive(BoardView boardView, char color) {

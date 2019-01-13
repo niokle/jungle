@@ -31,7 +31,7 @@ public class ComputerMove {
         if (pawn.getActive()) {
             boardView.setPawnPosition(pawn, coordinates.getColumn(), coordinates.getRow());
             //test
-            System.out.println(pawn.getColour() + " " + pawn.getName() + " " + coordinates.getColumn() + "-" + coordinates.getRow());
+            //System.out.println(pawn.getColour() + " " + pawn.getName() + " " + coordinates.getColumn() + "-" + coordinates.getRow());
         }
     }
 }

@@ -33,7 +33,7 @@ public class ComputerAvailablePawnsCoordinates {
         for (Pawn p : boardView.getAllPawns()) {
             if (p.getColour() == color && p.getActive()) {
                 possibilityToBeBeatIfDoNotMove = isPossibilityToBeBeat(p, boardView.getPawnCoordinates(p).getColumn(), boardView.getPawnCoordinates(p).getRow());
-                for (Coordinates c : pawnMoves.getMoves(p, boardView.getPawnCoordinates(p).getColumn(), boardView.getPawnCoordinates(p).getRow(), whiteOnTop)) {
+                for (Coordinates c : pawnMoves.getMoves(p, whiteOnTop)) {
                     distanceToWinField = getDistanceToWinField(c);
                     possibilityToBeBeatAfterMove = isPossibilityToBeBeat(p, c.getColumn(), c.getRow());
                     if (boardView.getPawn(c.getColumn(), c.getRow()) != null) {
@@ -46,6 +46,21 @@ public class ComputerAvailablePawnsCoordinates {
                 }
             }
         }
+        //Test
+        for (ComputerPawnCoordinateDistance c : computerPawnCoordinateDistanceList) {
+            System.out.println(
+                    c.getPawn().getColour() + " " +
+                            c.getPawn().getName() + " " +
+                            c.isPossibilityToBeBeatAfterMove() + " " +
+                            c.isPossibilityToBeBeatIfDoNotMove() + " " +
+                            c.isBeatingPossibility() + " " +
+                            c.getDistanceToWinField() + " " +
+                            c.getCoordinates().getColumn() + " " +
+                            c.getCoordinates().getRow()
+            );
+
+
+        }
     }
 
     private double getDistanceToWinField(Coordinates c) {
@@ -55,7 +70,7 @@ public class ComputerAvailablePawnsCoordinates {
     public boolean isPossibilityToBeBeat(Pawn pawn, int column, int row) {
         for (Pawn p : boardView.getAllPawns()) {
             if (p.getColour() != pawn.getColour() && p.getCurrentStrength() >= pawn.getCurrentStrength()) {
-                for (Coordinates c : pawnMoves.getMoves(p, column, row, whiteOnTop)) {
+                for (Coordinates c : pawnMoves.getMoves(p, whiteOnTop)) {
                     if(c.getColumn() == column && c.getRow() == row) {
                         return true;
                     }
