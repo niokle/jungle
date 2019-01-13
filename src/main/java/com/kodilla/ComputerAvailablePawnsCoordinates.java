@@ -47,7 +47,7 @@ public class ComputerAvailablePawnsCoordinates {
             }
         }
         //Test
-        for (ComputerPawnCoordinateDistance c : computerPawnCoordinateDistanceList) {
+        /* for (ComputerPawnCoordinateDistance c : computerPawnCoordinateDistanceList) {
             System.out.println(
                     c.getPawn().getColour() + " " +
                             c.getPawn().getName() + " " +
@@ -61,6 +61,7 @@ public class ComputerAvailablePawnsCoordinates {
 
 
         }
+        */
     }
 
     private double getDistanceToWinField(Coordinates c) {
