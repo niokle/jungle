@@ -29,8 +29,10 @@ public class PawnMoves {
             if (isCoordinateOutsideBoard(coordinates)) {
                 continue;
             }
-            if (isNoPawnInCoordinates(coordinates)) {
-                if (pawn.getColour() == boardView.getPawn(coordinates.getColumn(), coordinates.getRow()).getColour()) {
+            Pawn pawnOnCoordinates = boardView.getPawn(coordinates.getColumn(), coordinates.getRow());
+            Field fieldOnCoordinates = board.getField(coordinates.getColumn(), coordinates.getRow());
+            if (isPawnInCoordinates(coordinates)) {
+                if (pawn.getColour() == pawnOnCoordinates.getColour()  && !(fieldOnCoordinates.getType() == Field.Type.LAKE)) {
                     continue;
                 }
             }
@@ -77,7 +79,7 @@ public class PawnMoves {
             if (isBlackPawnMoveToOwnHome(pawn, coordinates)) {
                 continue;
             }
-            if (isNoPawnInCoordinates(coordinates)) {
+            if (isPawnInCoordinates(coordinates)) {
                 if (isPawnRatTryMoveFromLakeToElephantField(pawn, column, row, coordinates)) {
                     continue;
                 }
@@ -103,7 +105,7 @@ public class PawnMoves {
         return board.getField(coordinates.getColumn(), coordinates.getRow()).getType() == Field.Type.LAKE && pawn.getName() != Pawn.Name.RAT && pawn.getName() != Pawn.Name.LION && pawn.getName() != Pawn.Name.TIGER;
     }
 
-    private boolean isNoPawnInCoordinates(Coordinates coordinates) {
+    private boolean isPawnInCoordinates(Coordinates coordinates) {
         return boardView.getPawn(coordinates.getColumn(), coordinates.getRow()) != null;
     }
 
