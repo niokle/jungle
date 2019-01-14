@@ -28,20 +28,27 @@ public class ComputerAvailablePawnsCoordinates {
         boolean beatingPossibility = false;
         boolean possibilityToBeBeatAfterMove;
         boolean possibilityToBeBeatIfDoNotMove;
+        boolean moveToStrongerPawnPosition = false;
         ComputerPawnCoordinateDistance computerPawnCoordinateDistance;
 
-        for (Pawn p : boardView.getAllPawns()) {
-            if (p.getColour() == color && p.getActive()) {
-                possibilityToBeBeatIfDoNotMove = isPossibilityToBeBeat(p, boardView.getPawnCoordinates(p).getColumn(), boardView.getPawnCoordinates(p).getRow());
-                for (Coordinates c : pawnMoves.getMoves(p, whiteOnTop)) {
-                    distanceToWinField = getDistanceToWinField(c);
-                    possibilityToBeBeatAfterMove = isPossibilityToBeBeat(p, c.getColumn(), c.getRow());
-                    if (boardView.getPawn(c.getColumn(), c.getRow()) != null) {
-                        if (boardView.getPawn(c.getColumn(), c.getRow()).getColour() != color && boardView.getPawn(c.getColumn(), c.getRow()).getCurrentStrength() <= p.getCurrentStrength() && boardView.getPawn(c.getColumn(), c.getRow()).getActive()) {
+        for (Pawn pawn : boardView.getAllPawns()) {
+            if (pawn.getColour() == color && pawn.getActive()) {
+                possibilityToBeBeatIfDoNotMove = isPossibilityToBeBeat(pawn, boardView.getPawnCoordinates(pawn).getColumn(), boardView.getPawnCoordinates(pawn).getRow());
+                for (Coordinates coordinates : pawnMoves.getMoves(pawn, whiteOnTop)) {
+                    distanceToWinField = getDistanceToWinField(coordinates);
+                    possibilityToBeBeatAfterMove = isPossibilityToBeBeat(pawn, coordinates.getColumn(), coordinates.getRow());
+                    Pawn pawnOnCoordinates = boardView.getPawn(coordinates.getColumn(), coordinates.getRow());
+                    if (pawnOnCoordinates != null) {
+                        char colorPawnOnCoordinates = pawnOnCoordinates.getColour();
+                        int currentStrengthPawnOnCoordinates = pawnOnCoordinates.getCurrentStrength();
+                        boolean activePawnOnCoordinates = pawnOnCoordinates.getActive();
+                        if (colorPawnOnCoordinates != color && currentStrengthPawnOnCoordinates <= pawn.getCurrentStrength() && activePawnOnCoordinates) {
                             beatingPossibility = true;
+                        } else if (colorPawnOnCoordinates != color && currentStrengthPawnOnCoordinates > pawn.getCurrentStrength() && activePawnOnCoordinates) {
+                            moveToStrongerPawnPosition = true;
                         }
                     }
-                    computerPawnCoordinateDistance = new ComputerPawnCoordinateDistance(p, c, distanceToWinField, beatingPossibility, possibilityToBeBeatIfDoNotMove, possibilityToBeBeatAfterMove);
+                    computerPawnCoordinateDistance = new ComputerPawnCoordinateDistance(pawn, coordinates, distanceToWinField, beatingPossibility, possibilityToBeBeatIfDoNotMove, possibilityToBeBeatAfterMove, moveToStrongerPawnPosition);
                     computerPawnCoordinateDistanceList.add(computerPawnCoordinateDistance);
                 }
             }
@@ -71,8 +78,8 @@ public class ComputerAvailablePawnsCoordinates {
     public boolean isPossibilityToBeBeat(Pawn pawn, int column, int row) {
         for (Pawn p : boardView.getAllPawns()) {
             if (p.getColour() != pawn.getColour() && p.getCurrentStrength() >= pawn.getCurrentStrength()) {
-                for (Coordinates c : pawnMoves.getMoves(p, whiteOnTop)) {
-                    if(c.getColumn() == column && c.getRow() == row) {
+                for (Coordinates coordinates : pawnMoves.getMoves(p, whiteOnTop)) {
+                    if(coordinates.getColumn() == column && coordinates.getRow() == row) {
                         return true;
                     }
                 }
@@ -87,11 +94,12 @@ public class ComputerAvailablePawnsCoordinates {
 
     public ArrayList<ComputerPawnCoordinateDistance> getComputerPawnCoordinateDistanceListByPawn(Pawn pawn) {
         ArrayList<ComputerPawnCoordinateDistance> result = new ArrayList<>();
-        for (ComputerPawnCoordinateDistance c : computerPawnCoordinateDistanceList) {
-            if (c.getPawn() == pawn) {
-                result.add(c);
+        for (ComputerPawnCoordinateDistance computerPawnCoordinateDistance : computerPawnCoordinateDistanceList) {
+            if (computerPawnCoordinateDistance.getPawn() == pawn) {
+                result.add(computerPawnCoordinateDistance);
             }
         }
         return result;
     }
 }
+

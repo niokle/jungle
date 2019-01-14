@@ -25,12 +25,13 @@ public class ComputerAiHard {
         double distancePriority3 = 100;
         double distancePriority4 = 100;
         computerAvailablePawnsCoordinates.fillComputerPawnCoordinateDistanceList();
+
         for (ComputerPawnCoordinateDistance computerPawnCoordinateDistance : computerAvailablePawnsCoordinates.getComputerPawnCoordinateDistanceList()) {
             if (computerPawnCoordinateDistance.isPossibilityToBeBeatIfDoNotMove()) {
                 pawnResultPriority1 = computerPawnCoordinateDistance.getPawn();
                 resultPriority1 = computerAvailablePawnsCoordinates.getComputerPawnCoordinateDistanceListByPawn(pawnResultPriority1).get(random.nextInt(computerAvailablePawnsCoordinates.getComputerPawnCoordinateDistanceListByPawn(pawnResultPriority1).size()));
             }
-            if (computerPawnCoordinateDistance.isBeatingPossibility() && !computerPawnCoordinateDistance.isPossibilityToBeBeatAfterMove()) {
+            if (computerPawnCoordinateDistance.isBeatingPossibility() && !computerPawnCoordinateDistance.isPossibilityToBeBeatAfterMove() && !computerPawnCoordinateDistance.isMoveToStrongerPawnPosition()) {
                 resultPriority2 = computerPawnCoordinateDistance;
             }
             if (!computerPawnCoordinateDistance.isPossibilityToBeBeatAfterMove()) {
