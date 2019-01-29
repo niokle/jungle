@@ -7,31 +7,36 @@ public class ComputerMove {
         Pawn pawn = null;
         Coordinates coordinates = null;
         Rules.Win rulesWin;
+        ComputerPawnCoordinateDistance computerPawnCoordinateDistance;
 
         switch (level) {
             case EASY:
                 ComputerAiEasy computerAiEasy = new ComputerAiEasy(color, boardView, whiteOnTop);
-                ComputerPawnCoordinateDistance computerPawnCoordinateDistance = computerAiEasy.getComputerPawnCoordinateDistance();
+                computerPawnCoordinateDistance = computerAiEasy.getComputerPawnCoordinateDistance();
                 pawn = computerPawnCoordinateDistance.getPawn();
                 coordinates = computerPawnCoordinateDistance.getCoordinates();
                 break;
             case MEDIUM:
                 ComputerAiMedium computerAiMedium = new ComputerAiMedium(color, boardView, whiteOnTop);
-                pawn = computerAiMedium.getComputerPawnCoordinateDistance().getPawn();
-                coordinates = computerAiMedium.getComputerPawnCoordinateDistance().getCoordinates();
+                computerPawnCoordinateDistance = computerAiMedium.getComputerPawnCoordinateDistance();
+                pawn = computerPawnCoordinateDistance.getPawn();
+                coordinates = computerPawnCoordinateDistance.getCoordinates();
                 break;
             case HARD:
                 ComputerAiHard computerAiHard = new ComputerAiHard(color, boardView, whiteOnTop);
-                pawn = computerAiHard.getComputerPawnCoordinateDistance().getPawn();
-                coordinates = computerAiHard.getComputerPawnCoordinateDistance().getCoordinates();
+                computerPawnCoordinateDistance = computerAiHard.getComputerPawnCoordinateDistance();
+                pawn = computerPawnCoordinateDistance.getPawn();
+                coordinates = computerPawnCoordinateDistance.getCoordinates();
                 break;
         }
         rulesWin = rules.runRules(pawn, coordinates.getColumn(), coordinates.getRow(), board, boardView);
         win.checkWin(rulesWin);
         if (pawn.getActive()) {
             boardView.setPawnPosition(pawn, coordinates.getColumn(), coordinates.getRow());
-            //test
-            //System.out.println(pawn.getColour() + " " + pawn.getName() + " " + coordinates.getColumn() + "-" + coordinates.getRow());
+            //TODO kod do wyczyszczenia
+            System.out.println("------------------ ComputerMove ------------------");
+            System.out.println(pawn.getColour() + " " + pawn.getName() + " " + coordinates.getColumn() + "-" + coordinates.getRow());
+            System.out.println("------------------ ComputerMove ------------------");
         }
     }
 }

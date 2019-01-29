@@ -25,26 +25,28 @@ public class ComputerAvailablePawnsCoordinates {
     public void fillComputerPawnCoordinateDistanceList() {
         computerPawnCoordinateDistanceList.clear();
         double distanceToWinField;
-        boolean beatingPossibility = false;
+        boolean beatingPossibility;
         boolean possibilityToBeBeatAfterMove;
         boolean possibilityToBeBeatIfDoNotMove;
-        boolean moveToStrongerPawnPosition = false;
+        boolean moveToStrongerPawnPosition;
         ComputerPawnCoordinateDistance computerPawnCoordinateDistance;
 
         for (Pawn pawn : boardView.getAllPawns()) {
             if (pawn.getColour() == color && pawn.getActive()) {
                 possibilityToBeBeatIfDoNotMove = isPossibilityToBeBeat(pawn, boardView.getPawnCoordinates(pawn).getColumn(), boardView.getPawnCoordinates(pawn).getRow());
                 for (Coordinates coordinates : pawnMoves.getMoves(pawn, whiteOnTop)) {
+                    beatingPossibility = false;
+                    moveToStrongerPawnPosition = false;
                     distanceToWinField = getDistanceToWinField(coordinates);
                     possibilityToBeBeatAfterMove = isPossibilityToBeBeat(pawn, coordinates.getColumn(), coordinates.getRow());
                     Pawn pawnOnCoordinates = boardView.getPawn(coordinates.getColumn(), coordinates.getRow());
                     if (pawnOnCoordinates != null) {
                         char colorPawnOnCoordinates = pawnOnCoordinates.getColour();
-                        int currentStrengthPawnOnCoordinates = pawnOnCoordinates.getCurrentStrength();
                         boolean activePawnOnCoordinates = pawnOnCoordinates.getActive();
-                        if (colorPawnOnCoordinates != color && currentStrengthPawnOnCoordinates <= pawn.getCurrentStrength() && activePawnOnCoordinates) {
+                        if (colorPawnOnCoordinates != color && (pawn.compareTheStrengthToAnotherPawn(pawnOnCoordinates) == Pawn.StrengthComparison.STRONGER || pawn.compareTheStrengthToAnotherPawn(pawnOnCoordinates) == Pawn.StrengthComparison.EQUAL) && activePawnOnCoordinates) {
                             beatingPossibility = true;
-                        } else if (colorPawnOnCoordinates != color && currentStrengthPawnOnCoordinates > pawn.getCurrentStrength() && activePawnOnCoordinates) {
+                        }
+                        if (colorPawnOnCoordinates != color && pawn.compareTheStrengthToAnotherPawn(pawnOnCoordinates) == Pawn.StrengthComparison.WEAKER && activePawnOnCoordinates) {
                             moveToStrongerPawnPosition = true;
                         }
                     }
@@ -53,22 +55,22 @@ public class ComputerAvailablePawnsCoordinates {
                 }
             }
         }
-        //Test
-        /* for (ComputerPawnCoordinateDistance c : computerPawnCoordinateDistanceList) {
-            System.out.println(
-                    c.getPawn().getColour() + " " +
-                            c.getPawn().getName() + " " +
-                            c.isPossibilityToBeBeatAfterMove() + " " +
-                            c.isPossibilityToBeBeatIfDoNotMove() + " " +
-                            c.isBeatingPossibility() + " " +
-                            c.getDistanceToWinField() + " " +
-                            c.getCoordinates().getColumn() + " " +
-                            c.getCoordinates().getRow()
-            );
-
-
-        }
-        */
+        //TODO
+        //System.out.println("-------------------------- ComputerAvailablePawnsCoordinators ------------------------");
+        //for (ComputerPawnCoordinateDistance c : computerPawnCoordinateDistanceList) {
+        //    System.out.println(
+        //            c.getPawn().getColour() + " " +
+        //                    c.getPawn().getName() + " " +
+        //                    c.isPossibilityToBeBeatAfterMove() + " " +
+        //                    c.isPossibilityToBeBeatIfDoNotMove() + " " +
+        //                    c.isBeatingPossibility() + " " +
+        //                    c.getDistanceToWinField() + " " +
+        //                    c.getCoordinates().getColumn() + " " +
+        //                    c.getCoordinates().getRow() + " " +
+        //                    c.isMoveToStrongerPawnPosition()
+        //    );
+        //}
+        //System.out.println("-------------------------- ComputerAvailablePawnsCoordinators ------------------------");
     }
 
     private double getDistanceToWinField(Coordinates c) {
@@ -77,7 +79,7 @@ public class ComputerAvailablePawnsCoordinates {
 
     public boolean isPossibilityToBeBeat(Pawn pawn, int column, int row) {
         for (Pawn p : boardView.getAllPawns()) {
-            if (p.getColour() != pawn.getColour() && p.getCurrentStrength() >= pawn.getCurrentStrength()) {
+            if (p.getColour() != pawn.getColour() && (p.compareTheStrengthToAnotherPawn(pawn) == Pawn.StrengthComparison.STRONGER || p.compareTheStrengthToAnotherPawn(pawn) == Pawn.StrengthComparison.EQUAL)) {
                 for (Coordinates coordinates : pawnMoves.getMoves(p, whiteOnTop)) {
                     if(coordinates.getColumn() == column && coordinates.getRow() == row) {
                         return true;

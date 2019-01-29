@@ -2,6 +2,8 @@ package com.kodilla;
 
 import javafx.scene.image.ImageView;
 
+import java.util.Objects;
+
 public class Pawn {
     private Name name;
     private char color;
@@ -58,5 +60,37 @@ public class Pawn {
 
     public int getStrength() {
         return strength;
+    }
+
+    public enum StrengthComparison {
+        STRONGER, WEAKER, EQUAL
+    }
+
+    public StrengthComparison compareTheStrengthToAnotherPawn(Pawn otherPawn) {
+        if (currentStrength == 1 && otherPawn.getCurrentStrength() == 8) {
+            return StrengthComparison.STRONGER;
+        } else if (currentStrength == 8 && otherPawn.getCurrentStrength() == 1) {
+            return StrengthComparison.WEAKER;
+        } else {
+                if (currentStrength > otherPawn.getCurrentStrength()) {
+                    return StrengthComparison.STRONGER;
+                } else if (currentStrength < otherPawn.getCurrentStrength()) {
+                    return StrengthComparison.WEAKER;
+                }
+                return StrengthComparison.EQUAL;
+            }
+        }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pawn pawn = (Pawn) o;
+        return color == pawn.color &&
+                getStrength() == pawn.getStrength() &&
+                getCurrentStrength() == pawn.getCurrentStrength() &&
+                getActive() == pawn.getActive() &&
+                getName() == pawn.getName() &&
+                imagePath.equals(pawn.imagePath);
     }
 }

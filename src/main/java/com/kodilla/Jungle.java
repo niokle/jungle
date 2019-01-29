@@ -212,8 +212,14 @@ public class Jungle extends Application {
         backgroundAndGrid.getGrid().setOnMouseClicked(event -> {
             if (!endOfGame) {
                 drawPawns();
-                int column = GridPane.getColumnIndex(event.getPickResult().getIntersectedNode());
-                int row = GridPane.getRowIndex(event.getPickResult().getIntersectedNode());
+                int column = 0;
+                int row = 0;
+                try {
+                    column = GridPane.getColumnIndex(event.getPickResult().getIntersectedNode());
+                    row = GridPane.getRowIndex(event.getPickResult().getIntersectedNode());
+                } catch (NullPointerException exeption) {
+
+                }
                 Pawn pawn = boardView.getPawn(column, row);
 
                 if (selectedPawn != null) {

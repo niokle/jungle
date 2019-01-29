@@ -62,7 +62,8 @@ public class BoardView {
         final int[] row = new int[1];
         Pawn thisPawn[][] = this.pawn;
         boardLoop.runBoardLoop((columnBoardLoop, rowBoardLoop) -> {
-            if (thisPawn[columnBoardLoop][rowBoardLoop] == pawn) {
+            Pawn pawnBoard = thisPawn[columnBoardLoop][rowBoardLoop];
+            if (pawn.equals(pawnBoard)) {
                 column[0] = columnBoardLoop;
                 row[0] = rowBoardLoop;
             }

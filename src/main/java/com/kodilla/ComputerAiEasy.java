@@ -1,46 +1,35 @@
 package com.kodilla;
 
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ComputerAiEasy {
     private char color;
     private BoardView boardView;
     private boolean whiteOnTop;
-    private ComputerAvailablePawnsCoordinates computerAvailablePawnsCoordinates;
-    private Random random = new Random();
 
     public ComputerAiEasy(char color, BoardView boardView, boolean whiteOnTop) {
         this.color = color;
         this.boardView = boardView;
         this.whiteOnTop = whiteOnTop;
-        computerAvailablePawnsCoordinates = new ComputerAvailablePawnsCoordinates(color, boardView, whiteOnTop);
     }
 
-    public ComputerPawnCoordinateDistance selectComputerPawnCoordinateDistance() {
-        ArrayList<ComputerPawnCoordinateDistance> computerPawnCoordinateDistanceList = new ArrayList<>();
-        Pawn pawn;
-        double distance = 100;
-        int i = 0;
-        int index = 0;
+    public ArrayList<ComputerPawnCoordinateDistance> selectComputerPawnCoordinateDistanceList() {
+        List<ComputerPawnCoordinateDistance> computerPawnCoordinateDistancesList;
+        ComputerAvailablePawnsCoordinates computerAvailablePawnsCoordinates = new ComputerAvailablePawnsCoordinates(color, boardView, whiteOnTop);
         computerAvailablePawnsCoordinates.fillComputerPawnCoordinateDistanceList();
-        for (ComputerPawnCoordinateDistance computerPawnCoordinateDistance : computerAvailablePawnsCoordinates.getComputerPawnCoordinateDistanceList()) {
-            if (!computerPawnCoordinateDistance.isPossibilityToBeBeatAfterMove()) {
-                computerPawnCoordinateDistanceList.add(computerPawnCoordinateDistance);
-            }
-        }
-        pawn = computerPawnCoordinateDistanceList.get(random.nextInt(computerPawnCoordinateDistanceList.size())).getPawn();
-        for (ComputerPawnCoordinateDistance computerPawnCoordinateDistance : computerAvailablePawnsCoordinates.getComputerPawnCoordinateDistanceListByPawn(pawn)) {
-            if (computerPawnCoordinateDistance.getDistanceToWinField() < distance) {
-                distance = computerPawnCoordinateDistance.getDistanceToWinField();
-                index = i;
-            }
-            i++;
-        }
-        return computerAvailablePawnsCoordinates.getComputerPawnCoordinateDistanceListByPawn(pawn).get(index);
+        computerPawnCoordinateDistancesList = computerAvailablePawnsCoordinates.getComputerPawnCoordinateDistanceList().stream()
+                .filter(c -> !c.isMoveToStrongerPawnPosition())
+                .sorted(Comparator.comparing(ComputerPawnCoordinateDistance::getDistanceToWinField))
+                .collect(Collectors.toList());
+        //TODO kod do wyczyszczenia
+        //System.out.println(computerPawnCoordinateDistancesList.size());
+        return (ArrayList<ComputerPawnCoordinateDistance>) computerPawnCoordinateDistancesList;
     }
 
     public ComputerPawnCoordinateDistance getComputerPawnCoordinateDistance() {
-        return selectComputerPawnCoordinateDistance();
+        return PawnCoordinateDistance.getComputerPawnCoordinateDistance(selectComputerPawnCoordinateDistanceList());
     }
 }
