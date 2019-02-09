@@ -33,10 +33,6 @@ public class ComputerMove {
         win.checkWin(rulesWin);
         if (pawn.getActive()) {
             boardView.setPawnPosition(pawn, coordinates.getColumn(), coordinates.getRow());
-            //TODO kod do wyczyszczenia
-            System.out.println("------------------ ComputerMove ------------------");
-            System.out.println(pawn.getColour() + " " + pawn.getName() + " " + coordinates.getColumn() + "-" + coordinates.getRow());
-            System.out.println("------------------ ComputerMove ------------------");
         }
     }
 }

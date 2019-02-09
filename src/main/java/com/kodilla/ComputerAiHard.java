@@ -83,8 +83,6 @@ public class ComputerAiHard {
                 .filter(c -> !c.isMoveToStrongerPawnPosition())
                 .sorted(Comparator.comparing(ComputerPawnCoordinateDistance::getDistanceToWinField))
                 .collect(Collectors.toList());
-        //TODO kod do wyczyszczenia
-        //System.out.println(computerPawnCoordinateDistancesList.size());
         return (ArrayList<ComputerPawnCoordinateDistance>) computerPawnCoordinateDistancesList;
     }
 

@@ -55,22 +55,6 @@ public class ComputerAvailablePawnsCoordinates {
                 }
             }
         }
-        //TODO
-        //System.out.println("-------------------------- ComputerAvailablePawnsCoordinators ------------------------");
-        //for (ComputerPawnCoordinateDistance c : computerPawnCoordinateDistanceList) {
-        //    System.out.println(
-        //            c.getPawn().getColour() + " " +
-        //                    c.getPawn().getName() + " " +
-        //                    c.isPossibilityToBeBeatAfterMove() + " " +
-        //                    c.isPossibilityToBeBeatIfDoNotMove() + " " +
-        //                    c.isBeatingPossibility() + " " +
-        //                    c.getDistanceToWinField() + " " +
-        //                    c.getCoordinates().getColumn() + " " +
-        //                    c.getCoordinates().getRow() + " " +
-        //                    c.isMoveToStrongerPawnPosition()
-        //    );
-        //}
-        //System.out.println("-------------------------- ComputerAvailablePawnsCoordinators ------------------------");
     }
 
     private double getDistanceToWinField(Coordinates c) {

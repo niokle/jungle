@@ -32,8 +32,6 @@ public class BackgroundAndGrid {
         }
         grid.setHgap(0);
         grid.setVgap(0);
-        //TODO kod do wyczyszczenia
-        //grid.setGridLinesVisible(true);
     }
 
     public void addConstantNodes() {
